@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -5,6 +7,7 @@ plugins {
     id("kotlinx-serialization")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
@@ -92,4 +95,20 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.dataStore.preferences)
+
+    detektPlugins(libs.detekt.formatting)
+}
+
+tasks.register<Detekt>("detektFormat") {
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    parallel = true
+    buildUponDefaultConfig = true
+    autoCorrect = true
+}
+
+detekt {
+    config.setFrom(project.file("$rootDir/config/detekt/detekt.yml"))
+    parallel = true
+    buildUponDefaultConfig = true
+    autoCorrect = true
 }
