@@ -1,4 +1,4 @@
-package com.ch13mob.template.ui.theme
+package com.ch13mob.template.core.designsystem.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,8 +1,10 @@
-import io.gitlab.arturbosch.detekt.Detekt
+import com.android.build.api.dsl.DefaultConfig
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
     id("com.android.application")
     kotlin("android")
+    kotlin("kapt")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
     id("com.google.dagger.hilt.android")
@@ -25,11 +27,16 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigString(
+            key = "BASE_URL",
+            value = "https://api.breakingbadquotes.xyz/"
+        )
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -45,6 +52,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.8"
@@ -83,7 +91,11 @@ dependencies {
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.compose)
 
+    implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.okhttp.logging)
+    implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlin.serialization)
 
     implementation(libs.room.runtime)
@@ -92,18 +104,11 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    ksp(libs.hilt.compiler)
+    kapt(libs.hilt.compiler)
 
     implementation(libs.androidx.dataStore.preferences)
 
     detektPlugins(libs.detekt.formatting)
-}
-
-tasks.register<Detekt>("detektFormat") {
-    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
-    parallel = true
-    buildUponDefaultConfig = true
-    autoCorrect = true
 }
 
 detekt {
@@ -111,4 +116,11 @@ detekt {
     parallel = true
     buildUponDefaultConfig = true
     autoCorrect = true
+}
+
+fun DefaultConfig.buildConfigString(
+    key: String,
+    value: String,
+) {
+    buildConfigField("String", key, "\"$value\"")
 }

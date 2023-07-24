@@ -1,4 +1,4 @@
-package com.ch13mob.template.ui.theme
+package com.ch13mob.template.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
