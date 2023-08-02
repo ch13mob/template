@@ -21,20 +21,20 @@ class QuoteViewModel @Inject constructor(
     private val quoteRepository: QuoteRepository
 ) : ViewModel() {
 
-    private val _isLoadingState = MutableStateFlow(false)
-    val isLoadingState = _isLoadingState.asStateFlow()
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
 
-    private val _isErrorState = MutableStateFlow(false)
-    val isErrorState = _isErrorState.asStateFlow()
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage = _errorMessage.asStateFlow()
 
-    val quoteState: StateFlow<Quote> = quoteRepository.getQuote(id = 0)
+    val quote: StateFlow<Quote> = quoteRepository.getQuote(id = 0)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = Quote()
         )
 
-    val showDateState: StateFlow<Boolean> = userDataRepository.showDate
+    val showDate: StateFlow<Boolean> = userDataRepository.showDate
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -51,11 +51,21 @@ class QuoteViewModel @Inject constructor(
         }
     }
 
+    fun onErrorConsumed() {
+        _errorMessage.update { null }
+    }
+
     private fun fetchQuote() {
         viewModelScope.launch {
-            _isLoadingState.update { true }
-            quoteRepository.fetchQuote()
-            _isLoadingState.update { false }
+            _isLoading.update { true }
+
+            runCatching {
+                quoteRepository.fetchQuote()
+            }.onFailure {
+
+            }
+
+            _isLoading.update { false }
         }
     }
 }

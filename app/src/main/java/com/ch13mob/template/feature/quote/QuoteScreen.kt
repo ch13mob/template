@@ -37,16 +37,16 @@ fun QuoteRoute(
     viewModel: QuoteViewModel = hiltViewModel(),
     onQuoteClick: (quoteId: Int, quoteAuthor: String) -> Unit,
 ) {
-    val isLoadingState by viewModel.isLoadingState.collectAsStateWithLifecycle()
-    val isErrorState by viewModel.isErrorState.collectAsStateWithLifecycle()
-    val quoteState by viewModel.quoteState.collectAsStateWithLifecycle()
-    val showDateState by viewModel.showDateState.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
+    val quote by viewModel.quote.collectAsStateWithLifecycle()
+    val showDate by viewModel.showDate.collectAsStateWithLifecycle()
 
     QuoteScreen(
-        isLoadingState = isLoadingState,
-        isErrorState = isErrorState,
-        quoteState = quoteState,
-        showDateState = showDateState,
+        isLoading = isLoading,
+        errorMessage = errorMessage,
+        quote = quote,
+        showDate = showDate,
         onQuoteClick = onQuoteClick,
         nextQuoteClick = viewModel::refreshQuote,
         toggleShowDate = viewModel::toggleShowDate,
@@ -56,10 +56,10 @@ fun QuoteRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuoteScreen(
-    isLoadingState: Boolean,
-    isErrorState: Boolean,
-    quoteState: Quote,
-    showDateState: Boolean,
+    isLoading: Boolean,
+    errorMessage: String?,
+    quote: Quote,
+    showDate: Boolean,
     onQuoteClick: (quoteId: Int, quoteAuthor: String) -> Unit,
     nextQuoteClick: () -> Unit,
     toggleShowDate: () -> Unit
@@ -86,7 +86,7 @@ fun QuoteScreen(
                         .fillMaxHeight(fraction = 0.5f),
                     contentAlignment = Alignment.Center,
                 ) {
-                    if (quoteState.quote.isEmpty()) {
+                    if (quote.quote.isEmpty()) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -98,8 +98,8 @@ fun QuoteScreen(
                         Card(
                             onClick = {
                                 onQuoteClick(
-                                    quoteState.id,
-                                    quoteState.author
+                                    quote.id,
+                                    quote.author
                                 )
                             },
                         ) {
@@ -111,25 +111,25 @@ fun QuoteScreen(
                                 horizontalAlignment = Alignment.Start,
                             ) {
                                 Text(
-                                    text = "${quoteState.author}:",
+                                    text = "${quote.author}:",
                                     style = MaterialTheme.typography.headlineMedium,
                                 )
                                 Text(
-                                    text = "${quoteState.quote}",
+                                    text = "${quote.quote}",
                                     style = MaterialTheme.typography.bodyLarge,
                                 )
-                                if (showDateState) {
+                                if (showDate) {
                                     Text(
                                         modifier = Modifier
                                             .padding(top = 26.dp),
-                                        text = quoteState.lastUpdatedTime()
+                                        text = quote.lastUpdatedTime()
                                     )
                                 }
                             }
                         }
                     }
 
-                    if (isLoadingState) {
+                    if (isLoading) {
                         Box(
                             modifier = Modifier
                                 .fillMaxSize(),
@@ -157,7 +157,7 @@ fun QuoteScreen(
                             .width(16.dp)
                     )
                     Switch(
-                        checked = showDateState,
+                        checked = showDate,
                         onCheckedChange = { toggleShowDate() }
                     )
                 }
