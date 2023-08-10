@@ -71,9 +71,9 @@ class QuotesViewModel @Inject constructor(
     }
 }
 
-sealed interface QuotesUiEvent {
-    object RefreshQuotes : QuotesUiEvent
-    object ErrorConsumed : QuotesUiEvent
+sealed class QuotesUiEvent {
+    object RefreshQuotes : QuotesUiEvent()
+    object ErrorConsumed : QuotesUiEvent()
 }
 
 data class QuotesUiState(
