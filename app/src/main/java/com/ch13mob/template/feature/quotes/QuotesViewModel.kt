@@ -59,8 +59,8 @@ class QuotesViewModel @Inject constructor(
 
     private fun fetchQuotes() {
         viewModelScope.launch {
-            _isLoading.update { true }
             runCatching {
+                _isLoading.update { true }
                 quoteRepository.fetchQuotes()
                 _isLoading.update { false }
             }.onFailure { exception ->
