@@ -11,15 +11,15 @@ import com.ch13mob.template.feature.qoutedetail.QuoteDetailRoute
 const val QuoteDetailNavigationRoute = "quote_detail_route"
 
 const val QuoteIdArg = "quoteId"
-const val QuoteAuthorArg = "quoteAuthor"
+const val QuoteTextArg = "quoteText"
 
 fun NavController.navigateToQuoteDetail(
     quoteId: Int = -1,
-    quoteAuthor: String = "",
+    quoteText: String = "",
     navOptions: NavOptions? = null
 ) {
     this.navigate(
-        QuoteDetailNavigationRoute.plus("/$quoteId&$quoteAuthor"),
+        QuoteDetailNavigationRoute.plus("/$quoteId&$quoteText"),
         navOptions
     )
 }
@@ -28,10 +28,10 @@ fun NavGraphBuilder.quoteDetailScreen(
     onBackClick: () -> Unit
 ) {
     composable(
-        route = QuoteDetailNavigationRoute.plus("/{$QuoteIdArg}&{$QuoteAuthorArg}"),
+        route = QuoteDetailNavigationRoute.plus("/{$QuoteIdArg}&{$QuoteTextArg}"),
         arguments = listOf(
             navArgument(QuoteIdArg) { type = NavType.IntType },
-            navArgument(QuoteAuthorArg) { type = NavType.StringType }
+            navArgument(QuoteTextArg) { type = NavType.StringType }
         )
     ) {
         QuoteDetailRoute(

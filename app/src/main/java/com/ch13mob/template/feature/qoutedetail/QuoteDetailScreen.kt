@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
@@ -23,11 +24,11 @@ internal fun QuoteDetailRoute(
     onBackClick: () -> Unit
 ) {
     val quoteId = viewModel.quoteId
-    val quoteAuthor = viewModel.quoteAuthor
+    val quoteText = viewModel.quoteText
 
     QuoteDetailScreen(
         quoteId = quoteId,
-        quoteAuthor = quoteAuthor,
+        quoteText = quoteText,
         onBackClick = onBackClick
     )
 }
@@ -37,7 +38,7 @@ internal fun QuoteDetailRoute(
 @Composable
 fun QuoteDetailScreen(
     quoteId: Int,
-    quoteAuthor: String,
+    quoteText: String,
     onBackClick: () -> Unit
 ) {
     Scaffold(
@@ -57,7 +58,8 @@ fun QuoteDetailScreen(
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
             ) {
@@ -65,7 +67,7 @@ fun QuoteDetailScreen(
                     text = "Quote ID: $quoteId"
                 )
                 Text(
-                    text = "Quote author: $quoteAuthor"
+                    text = "Quote: $quoteText"
                 )
             }
         }

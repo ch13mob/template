@@ -8,9 +8,9 @@ import kotlinx.datetime.Instant
     tableName = "quote"
 )
 data class QuoteEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val quote: String,
+    val text: String,
     val author: String,
     val date: Instant
 )

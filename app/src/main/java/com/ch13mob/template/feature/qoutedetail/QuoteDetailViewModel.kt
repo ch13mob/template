@@ -2,8 +2,8 @@ package com.ch13mob.template.feature.qoutedetail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.ch13mob.template.feature.qoutedetail.navigation.QuoteAuthorArg
 import com.ch13mob.template.feature.qoutedetail.navigation.QuoteIdArg
+import com.ch13mob.template.feature.qoutedetail.navigation.QuoteTextArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,5 +13,5 @@ class QuoteDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     val quoteId: Int = savedStateHandle[QuoteIdArg] ?: -1
-    val quoteAuthor: String = savedStateHandle[QuoteAuthorArg] ?: ""
+    val quoteText: String = savedStateHandle[QuoteTextArg] ?: ""
 }

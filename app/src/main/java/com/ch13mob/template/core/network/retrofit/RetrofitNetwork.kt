@@ -13,14 +13,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private interface RetrofitAppNetworkApi {
-    @GET(value = "v1/quotes")
-    suspend fun getRandomQuote(): List<NetworkQuote>
+    @GET(value = "v1/quotes/10")
+    suspend fun getQuotes(): List<NetworkQuote>
 }
-
-// @Serializable
-// private data class NetworkResponse<T>(
-//    val data: T,
-// )
 
 @Singleton
 class RetrofitNetwork @Inject constructor(
@@ -37,5 +32,5 @@ class RetrofitNetwork @Inject constructor(
         .build()
         .create(RetrofitAppNetworkApi::class.java)
 
-    override suspend fun getRandomQuote() = networkApi.getRandomQuote()
+    override suspend fun getQuotes() = networkApi.getQuotes()
 }

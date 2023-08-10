@@ -9,23 +9,23 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class AppQuoteRepository @Inject constructor(
+class DefaultQuoteRepository @Inject constructor(
     private val quoteDao: QuoteDao,
     private val networkDataSource: NetworkDataSource
 ) : QuoteRepository {
 
-    override suspend fun fetchQuote() {
-        val quote = networkDataSource.getRandomQuote().first()
-        quoteDao.insertQuote(quote.toEntity())
+    override suspend fun fetchQuotes() {
+        val quotes = networkDataSource.getQuotes()
+        quoteDao.updateQuotes(quotes.map { it.toEntity() })
     }
 
-    override fun getQuote(id: Int): Flow<Quote> {
-        return quoteDao.getQuote(id).map { quoteEntity ->
-            if (quoteEntity == null) {
-                return@map Quote()
+    override fun getQuotesStream(): Flow<List<Quote>> {
+        return quoteDao.getQuotes().map { quotes ->
+            if (quotes.isEmpty()) {
+                return@map emptyList<Quote>()
             }
 
-            quoteEntity.toModel()
+            return@map quotes.map { it.toModel() }
         }
     }
 }

@@ -4,11 +4,11 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import java.text.SimpleDateFormat
 import java.util.Locale
-import java.util.TimeZone.*
+import java.util.TimeZone.getTimeZone
 
 data class Quote(
     val id: Int = 0,
-    val quote: String = "",
+    val text: String = "",
     val author: String = "",
     val date: Instant = Clock.System.now()
 ) {
@@ -18,6 +18,6 @@ data class Quote(
         val formatter = SimpleDateFormat("HH:mm:ss")
         val time: String = formatter.format(parser.parse(date.toString()))
 
-        return "Last updated at: $time"
+        return "Last updated at $time"
     }
 }

@@ -13,8 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import com.ch13mob.template.core.designsystem.theme.TemplateTheme
 import com.ch13mob.template.feature.qoutedetail.navigation.navigateToQuoteDetail
 import com.ch13mob.template.feature.qoutedetail.navigation.quoteDetailScreen
-import com.ch13mob.template.feature.quote.navigation.QuoteNavigationRoute
-import com.ch13mob.template.feature.quote.navigation.quoteScreen
+import com.ch13mob.template.feature.quotes.navigation.QuotesNavigationRoute
+import com.ch13mob.template.feature.quotes.navigation.quotesScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,11 +33,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = QuoteNavigationRoute
+                        startDestination = QuotesNavigationRoute
                     ) {
-                        quoteScreen(
-                            onQuoteClick = { quoteId, quoteAuthor ->
-                                navController.navigateToQuoteDetail(quoteId, quoteAuthor)
+                        quotesScreen(
+                            onQuoteClick = { quoteId, quoteText ->
+                                navController.navigateToQuoteDetail(quoteId, quoteText)
                             }
                         )
                         quoteDetailScreen(

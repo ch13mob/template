@@ -4,7 +4,7 @@ import com.ch13mob.template.core.datastore.AppPreferencesDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class AppUserDataRepository @Inject constructor(
+class DefaultUserDataRepository @Inject constructor(
     private val preferencesDataSource: AppPreferencesDataSource
 ) : UserDataRepository {
 
