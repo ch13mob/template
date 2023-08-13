@@ -13,7 +13,7 @@ import com.ch13mob.template.core.model.Quote
 fun QuotesList(
     modifier: Modifier = Modifier,
     quotes: List<Quote>,
-    onQuoteClick: (quoteId: Int, quoteText: String) -> Unit
+    onQuoteClick: (Int) -> Unit
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize(),
@@ -23,9 +23,7 @@ fun QuotesList(
         items(count = quotes.size) { index ->
             QuoteCard(
                 quote = quotes[index],
-                onQuoteClick = { id, quoteText ->
-                    onQuoteClick(id, quoteText)
-                }
+                onQuoteClick = onQuoteClick
             )
         }
     }

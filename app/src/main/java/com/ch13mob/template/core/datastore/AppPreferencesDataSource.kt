@@ -1,8 +1,8 @@
 package com.ch13mob.template.core.datastore
 
 import android.content.Context
-import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.map
@@ -15,18 +15,26 @@ class AppPreferencesDataSource @Inject constructor(
 ) {
     private val dataStore = context.dataStore
 
-    val showDate = dataStore.data.map { preferences ->
-        preferences[showDateKey] ?: true
+    val isLoggedIn = dataStore.data.map { preferences ->
+        preferences[emailKey].isNullOrEmpty().not()
     }
 
-    suspend fun toggleShowDate() {
+    suspend fun setEmail(email: String) {
         dataStore.edit { preferences ->
-            preferences[showDateKey] = preferences[showDateKey]?.not() ?: false
+            preferences[emailKey] = email
+        }
+    }
+
+    suspend fun setPassword(password: String) {
+        dataStore.edit { preferences ->
+            preferences[passwordKey] = password
         }
     }
 
     companion object {
-        private const val SHOW_DATE = "show_date"
-        private val showDateKey = booleanPreferencesKey(SHOW_DATE)
+        private const val EMAIL = "email"
+        private const val PASSWORD = "password"
+        private val emailKey = stringPreferencesKey(EMAIL)
+        private val passwordKey = stringPreferencesKey(PASSWORD)
     }
 }

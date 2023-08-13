@@ -21,10 +21,10 @@ import com.ch13mob.template.core.model.Quote
 fun QuoteCard(
     modifier: Modifier = Modifier,
     quote: Quote,
-    onQuoteClick: (quoteId: Int, quoteText: String) -> Unit,
+    onQuoteClick: (Int) -> Unit,
 ) {
     Card(
-        onClick = { onQuoteClick(quote.id, quote.text) },
+        onClick = { onQuoteClick(quote.id) },
     ) {
         Column(
             modifier = modifier

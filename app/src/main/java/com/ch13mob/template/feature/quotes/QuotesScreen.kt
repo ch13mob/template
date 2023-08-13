@@ -2,11 +2,13 @@ package com.ch13mob.template.feature.quotes
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -30,7 +32,7 @@ import com.ch13mob.template.feature.quotes.component.QuotesList
 @Composable
 fun QuotesRoute(
     viewModel: QuotesViewModel = hiltViewModel(),
-    onQuoteClick: (quoteId: Int, quoteText: String) -> Unit,
+    onQuoteClick: (Int) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -41,12 +43,13 @@ fun QuotesRoute(
     )
 }
 
+@Suppress("LongMethod")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuotesScreen(
     uiState: QuotesUiState,
     onEvent: (QuotesUiEvent) -> Unit,
-    onQuoteClick: (quoteId: Int, quoteText: String) -> Unit
+    onQuoteClick: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -63,17 +66,29 @@ fun QuotesScreen(
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             CenterAlignedTopAppBar(
+                scrollBehavior = scrollBehavior,
                 title = {
                     Text(text = stringResource(id = R.string.app_name))
                 },
-                scrollBehavior = scrollBehavior,
+                actions = {
+                    IconButton(onClick = { onEvent(QuotesUiEvent.Logout) }) {
+                        Icon(
+                            Icons.Default.Logout,
+                            contentDescription = null
+                        )
+                    }
+                }
             )
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { onEvent(QuotesUiEvent.RefreshQuotes) },
+                onClick = {
+                    if (uiState.isLoading) return@ExtendedFloatingActionButton
+                    onEvent(QuotesUiEvent.RefreshQuotes)
+                },
                 expanded = true,
                 icon = {
                     Icon(
@@ -84,7 +99,6 @@ fun QuotesScreen(
                 text = { Text(text = "Refresh Quotes") },
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
         content = { paddingValues ->
             if (uiState.quotes.isEmpty()) {
                 EmptyQuotesPlaceholder(

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ch13mob.template.core.common.exception.message
 import com.ch13mob.template.core.data.repository.QuoteRepository
+import com.ch13mob.template.core.data.repository.UserDataRepository
 import com.ch13mob.template.core.model.Quote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class QuotesViewModel @Inject constructor(
-    private val quoteRepository: QuoteRepository
+    private val quoteRepository: QuoteRepository,
+    private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
@@ -50,6 +52,7 @@ class QuotesViewModel @Inject constructor(
         when (event) {
             QuotesUiEvent.RefreshQuotes -> fetchQuotes()
             QuotesUiEvent.ErrorConsumed -> onErrorConsumed()
+            QuotesUiEvent.Logout -> logout()
         }
     }
 
@@ -69,11 +72,20 @@ class QuotesViewModel @Inject constructor(
             }
         }
     }
+
+    private fun logout() {
+        viewModelScope.launch {
+            _isLoading.update { true }
+            userDataRepository.logout()
+            _isLoading.update { false }
+        }
+    }
 }
 
 sealed class QuotesUiEvent {
     object RefreshQuotes : QuotesUiEvent()
     object ErrorConsumed : QuotesUiEvent()
+    object Logout : QuotesUiEvent()
 }
 
 data class QuotesUiState(
