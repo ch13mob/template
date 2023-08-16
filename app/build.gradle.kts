@@ -1,4 +1,4 @@
-import com.android.build.api.dsl.DefaultConfig
+import com.android.build.api.dsl.BaseFlavor
 
 plugins {
     id("com.android.application")
@@ -26,22 +26,73 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+    }
 
-        buildConfigString(
-            key = "BASE_URL",
-            value = "https://api.breakingbadquotes.xyz/"
-        )
+    signingConfigs {
+        getByName("debug") {
+            storeFile = file("./keys/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
+            isShrinkResources = false
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        release {
+            // TODO: Fix R8
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
+
+    flavorDimensions.add("main")
+    productFlavors {
+        create("dev") {
+            dimension = "main"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+
+            buildConfigString(
+                key = "BASE_URL",
+                value = "https://api.breakingbadquotes.xyz/"
+            )
+        }
+        create("qa") {
+            dimension = "main"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+
+            buildConfigString(
+                key = "BASE_URL",
+                value = "https://api.breakingbadquotes.xyz/"
+            )
+        }
+        create("prod") {
+            dimension = "main"
+
+            buildConfigString(
+                key = "BASE_URL",
+                value = "https://api.breakingbadquotes.xyz/"
+            )
+        }
+    }
+
+    // Skip next variants to speed up build
+    androidComponents.beforeVariants { variantBuilder ->
+        variantBuilder.enable = run {
+            !listOf("devRelease", "prodDebug").contains(variantBuilder.name)
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -117,7 +168,7 @@ detekt {
     autoCorrect = true
 }
 
-fun DefaultConfig.buildConfigString(
+fun BaseFlavor.buildConfigString(
     key: String,
     value: String,
 ) {
