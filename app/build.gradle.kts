@@ -68,8 +68,8 @@ android {
         }
         create("qa") {
             dimension = "main"
-            applicationIdSuffix = ".dev"
-            versionNameSuffix = "-dev"
+            applicationIdSuffix = ".qa"
+            versionNameSuffix = "-qa"
 
             buildConfigString(
                 key = "BASE_URL",
