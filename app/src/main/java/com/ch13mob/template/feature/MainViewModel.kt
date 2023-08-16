@@ -51,9 +51,9 @@ class MainViewModel @Inject constructor(
     }
 }
 
-sealed class MainUiEvent {
-    data class HandleDeeplink(val deeplink: Uri) : MainUiEvent()
-    object DeeplinkConsumed : MainUiEvent()
+sealed interface MainUiEvent {
+    data class HandleDeeplink(val deeplink: Uri) : MainUiEvent
+    object DeeplinkConsumed : MainUiEvent
 }
 
 data class MainUiState(

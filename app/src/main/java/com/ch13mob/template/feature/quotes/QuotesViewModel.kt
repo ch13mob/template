@@ -82,10 +82,10 @@ class QuotesViewModel @Inject constructor(
     }
 }
 
-sealed class QuotesUiEvent {
-    object RefreshQuotes : QuotesUiEvent()
-    object ErrorConsumed : QuotesUiEvent()
-    object Logout : QuotesUiEvent()
+sealed interface QuotesUiEvent {
+    object RefreshQuotes : QuotesUiEvent
+    object ErrorConsumed : QuotesUiEvent
+    object Logout : QuotesUiEvent
 }
 
 data class QuotesUiState(

@@ -9,6 +9,7 @@ Template for a new project.
 - [ ] Rename `rootProject.name = "template"` in the `settings.gradle.kts` to your app name
 - [ ] Rename `namespace = "com.ch13mob.template"` in the `app/build.gradle.kts` to your app package
 - [ ] Rename `applicationId "com.ch13mob.template"` in the `app/build.gradle.kts` to your app package
+- [ ] Rename `TemplateTheme` in ..core/designsystem/theme/Theme.kt to your app name
 - [ ] On `string.xml`, set your application name
 - [ ] Update the `README.md` file
 - [ ] Clean and Rebuild the project
