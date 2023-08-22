@@ -13,7 +13,7 @@ plugins {
 
 android {
     namespace = "com.ch13mob.template"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.ch13mob.template"
