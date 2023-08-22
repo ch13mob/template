@@ -1,14 +1,14 @@
 import com.android.build.api.dsl.BaseFlavor
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
     kotlin("kapt")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
-    id("com.google.dagger.hilt.android")
-    id("com.google.devtools.ksp")
-    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
@@ -105,7 +105,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.8"
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     packaging {
         resources {
