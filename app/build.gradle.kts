@@ -6,7 +6,6 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
-    kotlin("kapt")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
 }
@@ -154,7 +153,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.dataStore.preferences)
 
