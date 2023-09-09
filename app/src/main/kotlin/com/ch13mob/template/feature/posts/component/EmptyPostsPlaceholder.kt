@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.quotes.component
+package com.ch13mob.template.feature.posts.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,13 +8,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun EmptyQuotesPlaceholder(
+fun EmptyPostsPlaceholder(
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = "No quotes found")
+        Text(text = "No posts found")
     }
 }

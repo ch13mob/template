@@ -1,11 +1,11 @@
-package com.ch13mob.template.feature.quotes
+package com.ch13mob.template.feature.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ch13mob.template.core.common.exception.message
-import com.ch13mob.template.core.data.repository.QuoteRepository
+import com.ch13mob.template.core.data.repository.PostRepository
 import com.ch13mob.template.core.data.repository.UserDataRepository
-import com.ch13mob.template.core.model.Quote
+import com.ch13mob.template.core.model.Post
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,26 +18,30 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class QuotesViewModel @Inject constructor(
-    private val quoteRepository: QuoteRepository,
+class PostsViewModel @Inject constructor(
+    private val postRepository: PostRepository,
     private val userDataRepository: UserDataRepository
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
     private val _errorMessage = MutableStateFlow<String?>(null)
-    private val _quotesStream =
-        quoteRepository.getQuotesStream().catch { exception ->
+    private val _postsStream =
+        postRepository.getPosts().catch { exception ->
             _errorMessage.update { exception.message() }
             _isLoading.update { false }
         }
 
-    val uiState: StateFlow<QuotesUiState> = combine(
-        _quotesStream,
+    init {
+        fetchPosts()
+    }
+
+    val uiState: StateFlow<PostsUiState> = combine(
+        _postsStream,
         _isLoading,
         _errorMessage
-    ) { quotes, isLoading, errorMessage ->
-        QuotesUiState(
-            quotes = quotes,
+    ) { posts, isLoading, errorMessage ->
+        PostsUiState(
+            posts = posts,
             isLoading = isLoading,
             errorMessage = errorMessage
         )
@@ -45,14 +49,14 @@ class QuotesViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = QuotesUiState(isLoading = true)
+            initialValue = PostsUiState(isLoading = true)
         )
 
-    fun onEvent(event: QuotesUiEvent) {
+    fun onEvent(event: PostsUiEvent) {
         when (event) {
-            QuotesUiEvent.RefreshQuotes -> fetchQuotes()
-            QuotesUiEvent.ErrorConsumed -> onErrorConsumed()
-            QuotesUiEvent.Logout -> logout()
+            PostsUiEvent.RefreshPosts -> fetchPosts()
+            PostsUiEvent.ErrorConsumed -> onErrorConsumed()
+            PostsUiEvent.Logout -> logout()
         }
     }
 
@@ -60,11 +64,11 @@ class QuotesViewModel @Inject constructor(
         _errorMessage.update { null }
     }
 
-    private fun fetchQuotes() {
+    private fun fetchPosts() {
         viewModelScope.launch {
             runCatching {
                 _isLoading.update { true }
-                quoteRepository.fetchQuotes()
+                postRepository.fetchPosts()
                 _isLoading.update { false }
             }.onFailure { exception ->
                 _errorMessage.update { exception.message() }
@@ -82,14 +86,14 @@ class QuotesViewModel @Inject constructor(
     }
 }
 
-sealed interface QuotesUiEvent {
-    object RefreshQuotes : QuotesUiEvent
-    object ErrorConsumed : QuotesUiEvent
-    object Logout : QuotesUiEvent
+sealed interface PostsUiEvent {
+    data object RefreshPosts : PostsUiEvent
+    data object ErrorConsumed : PostsUiEvent
+    data object Logout : PostsUiEvent
 }
 
-data class QuotesUiState(
-    val quotes: List<Quote> = emptyList(),
+data class PostsUiState(
+    val posts: List<Post> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null
 )

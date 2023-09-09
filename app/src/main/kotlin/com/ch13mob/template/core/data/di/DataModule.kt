@@ -1,8 +1,8 @@
 package com.ch13mob.template.core.data.di
 
-import com.ch13mob.template.core.data.repository.DefaultQuoteRepository
+import com.ch13mob.template.core.data.repository.DefaultPostRepository
 import com.ch13mob.template.core.data.repository.DefaultUserDataRepository
-import com.ch13mob.template.core.data.repository.QuoteRepository
+import com.ch13mob.template.core.data.repository.PostRepository
 import com.ch13mob.template.core.data.repository.UserDataRepository
 import dagger.Binds
 import dagger.Module
@@ -19,7 +19,7 @@ interface DataModule {
     ): UserDataRepository
 
     @Binds
-    fun bindsQuoteRepository(
-        quoteRepository: DefaultQuoteRepository,
-    ): QuoteRepository
+    fun bindsPostRepository(
+        postRepository: DefaultPostRepository,
+    ): PostRepository
 }

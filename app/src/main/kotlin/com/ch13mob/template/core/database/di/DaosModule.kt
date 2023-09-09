@@ -1,7 +1,7 @@
 package com.ch13mob.template.core.database.di
 
 import com.ch13mob.template.core.database.AppDatabase
-import com.ch13mob.template.core.database.dao.QuoteDao
+import com.ch13mob.template.core.database.dao.PostDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 object DaosModule {
 
     @Provides
-    fun providesQuoteDao(
+    fun providesPostDao(
         database: AppDatabase,
-    ): QuoteDao = database.noteDao()
+    ): PostDao = database.postDao()
 }

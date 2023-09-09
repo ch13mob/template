@@ -1,12 +1,10 @@
-package com.ch13mob.template.feature.quotes
+package com.ch13mob.template.feature.posts
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -26,30 +24,30 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch13mob.template.R
 import com.ch13mob.template.core.designsystem.component.ProgressIndicator
-import com.ch13mob.template.feature.quotes.component.EmptyQuotesPlaceholder
-import com.ch13mob.template.feature.quotes.component.QuotesList
+import com.ch13mob.template.feature.posts.component.EmptyPostsPlaceholder
+import com.ch13mob.template.feature.posts.component.PostList
 
 @Composable
-fun QuotesRoute(
-    viewModel: QuotesViewModel = hiltViewModel(),
-    onQuoteClick: (Int) -> Unit,
+fun PostsRoute(
+    viewModel: PostsViewModel = hiltViewModel(),
+    onPostClick: (Int) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    QuotesScreen(
+    PostsScreen(
         uiState = uiState,
         onEvent = viewModel::onEvent,
-        onQuoteClick = onQuoteClick
+        onPostClick = onPostClick
     )
 }
 
 @Suppress("LongMethod")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuotesScreen(
-    uiState: QuotesUiState,
-    onEvent: (QuotesUiEvent) -> Unit,
-    onQuoteClick: (Int) -> Unit
+fun PostsScreen(
+    uiState: PostsUiState,
+    onEvent: (PostsUiEvent) -> Unit,
+    onPostClick: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -60,7 +58,7 @@ fun QuotesScreen(
                 message = errorMessage,
                 duration = SnackbarDuration.Short
             )
-            onEvent(QuotesUiEvent.ErrorConsumed)
+            onEvent(PostsUiEvent.ErrorConsumed)
         }
     }
 
@@ -74,7 +72,7 @@ fun QuotesScreen(
                     Text(text = stringResource(id = R.string.app_name))
                 },
                 actions = {
-                    IconButton(onClick = { onEvent(QuotesUiEvent.Logout) }) {
+                    IconButton(onClick = { onEvent(PostsUiEvent.Logout) }) {
                         Icon(
                             Icons.Default.Logout,
                             contentDescription = null
@@ -83,32 +81,16 @@ fun QuotesScreen(
                 }
             )
         },
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = {
-                    if (uiState.isLoading) return@ExtendedFloatingActionButton
-                    onEvent(QuotesUiEvent.RefreshQuotes)
-                },
-                expanded = true,
-                icon = {
-                    Icon(
-                        Icons.Default.Refresh,
-                        contentDescription = null
-                    )
-                },
-                text = { Text(text = "Refresh Quotes") },
-            )
-        },
         content = { paddingValues ->
-            if (uiState.quotes.isEmpty()) {
-                EmptyQuotesPlaceholder(
+            if (uiState.posts.isEmpty()) {
+                EmptyPostsPlaceholder(
                     modifier = Modifier.padding(paddingValues)
                 )
             } else {
-                QuotesList(
+                PostList(
                     modifier = Modifier.padding(paddingValues),
-                    quotes = uiState.quotes,
-                    onQuoteClick = onQuoteClick,
+                    posts = uiState.posts,
+                    onPostClick = onPostClick,
                 )
             }
 

@@ -3,13 +3,13 @@ package com.ch13mob.template.core.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ch13mob.template.core.database.dao.QuoteDao
-import com.ch13mob.template.core.database.model.QuoteEntity
+import com.ch13mob.template.core.database.dao.PostDao
+import com.ch13mob.template.core.database.model.PostEntity
 import com.ch13mob.template.core.database.utils.InstantConverter
 
 @Database(
     entities = [
-        QuoteEntity::class
+        PostEntity::class
     ],
     version = 1,
     autoMigrations = [],
@@ -19,5 +19,5 @@ import com.ch13mob.template.core.database.utils.InstantConverter
     InstantConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun noteDao(): QuoteDao
+    abstract fun postDao(): PostDao
 }

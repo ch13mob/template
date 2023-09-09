@@ -2,7 +2,7 @@ package com.ch13mob.template.core.network.retrofit
 
 import com.ch13mob.template.BuildConfig
 import com.ch13mob.template.core.network.NetworkDataSource
-import com.ch13mob.template.core.network.model.NetworkQuote
+import com.ch13mob.template.core.network.model.NetworkPost
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Call
@@ -13,8 +13,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private interface RetrofitAppNetworkApi {
-    @GET(value = "v1/quotes/10")
-    suspend fun getQuotes(): List<NetworkQuote>
+    @GET(value = "posts")
+    suspend fun getPosts(): List<NetworkPost>
 }
 
 @Singleton
@@ -32,5 +32,5 @@ class RetrofitNetwork @Inject constructor(
         .build()
         .create(RetrofitAppNetworkApi::class.java)
 
-    override suspend fun getQuotes() = networkApi.getQuotes()
+    override suspend fun getPosts() = networkApi.getPosts()
 }

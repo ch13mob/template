@@ -1,7 +1,7 @@
 package com.ch13mob.template.core.network
 
-import com.ch13mob.template.core.network.model.NetworkQuote
+import com.ch13mob.template.core.network.model.NetworkPost
 
 interface NetworkDataSource {
-    suspend fun getQuotes(): List<NetworkQuote>
+    suspend fun getPosts(): List<NetworkPost>
 }

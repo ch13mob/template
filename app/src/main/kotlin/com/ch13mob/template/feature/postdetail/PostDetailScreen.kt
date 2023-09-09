@@ -1,6 +1,5 @@
-package com.ch13mob.template.feature.qoutedetail
+package com.ch13mob.template.feature.postdetail
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,23 +17,22 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-internal fun QuoteDetailRoute(
-    viewModel: QuoteDetailViewModel = hiltViewModel(),
+internal fun PostDetailRoute(
+    viewModel: PostDetailViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val quoteId = viewModel.quoteId
+    val postId = viewModel.postId
 
-    QuoteDetailScreen(
-        quoteId = quoteId,
+    PostDetailScreen(
+        postId = postId,
         onBackClick = onBackClick
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Suppress("LongMethod")
 @Composable
-fun QuoteDetailScreen(
-    quoteId: Int,
+fun PostDetailScreen(
+    postId: Int,
     onBackClick: () -> Unit
 ) {
     Scaffold(
@@ -46,7 +44,7 @@ fun QuoteDetailScreen(
                     }
                 },
                 title = {
-                    Text(text = "Quote Detail")
+                    Text(text = "Post Detail")
                 }
             )
         },
@@ -58,9 +56,8 @@ fun QuoteDetailScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "Quote ID: $quoteId"
+                    text = "Post ID: $postId"
                 )
-                Log.d("tux", "Quote ID: $quoteId")
             }
         }
     )

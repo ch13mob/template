@@ -22,11 +22,11 @@ import com.ch13mob.template.core.designsystem.theme.TemplateTheme
 import com.ch13mob.template.feature.login.navigation.LoginNavigationGraph
 import com.ch13mob.template.feature.login.navigation.LoginNavigationRoute
 import com.ch13mob.template.feature.login.navigation.loginScreen
-import com.ch13mob.template.feature.qoutedetail.navigation.navigateToQuoteDetail
-import com.ch13mob.template.feature.qoutedetail.navigation.quoteDetailScreen
-import com.ch13mob.template.feature.quotes.navigation.QuotesNavigationGraph
-import com.ch13mob.template.feature.quotes.navigation.QuotesNavigationRoute
-import com.ch13mob.template.feature.quotes.navigation.quotesScreen
+import com.ch13mob.template.feature.postdetail.navigation.navigateToPostDetail
+import com.ch13mob.template.feature.postdetail.navigation.postDetailScreen
+import com.ch13mob.template.feature.posts.navigation.PostsNavigationGraph
+import com.ch13mob.template.feature.posts.navigation.PostsNavigationRoute
+import com.ch13mob.template.feature.posts.navigation.postsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(key1 = appState.isLoggedIn) {
                 if (appState.isLoggedIn) {
-                    navController.navigate(QuotesNavigationGraph) {
+                    navController.navigate(PostsNavigationGraph) {
                         popUpTo(0)
                     }
                 } else {
@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = QuotesNavigationGraph
+                        startDestination = PostsNavigationGraph
                     ) {
                         navigation(
                             route = LoginNavigationGraph,
@@ -97,15 +97,15 @@ class MainActivity : ComponentActivity() {
                         }
 
                         navigation(
-                            route = QuotesNavigationGraph,
-                            startDestination = QuotesNavigationRoute,
+                            route = PostsNavigationGraph,
+                            startDestination = PostsNavigationRoute,
                         ) {
-                            quotesScreen(
-                                onQuoteClick = { quoteId ->
-                                    navController.navigateToQuoteDetail(quoteId)
+                            postsScreen(
+                                onPostClick = { quoteId ->
+                                    navController.navigateToPostDetail(quoteId)
                                 }
                             )
-                            quoteDetailScreen(
+                            postDetailScreen(
                                 onBackClick = {
                                     navController.popBackStack()
                                 }

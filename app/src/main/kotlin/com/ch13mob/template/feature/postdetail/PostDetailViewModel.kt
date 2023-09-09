@@ -1,15 +1,15 @@
-package com.ch13mob.template.feature.qoutedetail
+package com.ch13mob.template.feature.postdetail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.ch13mob.template.feature.qoutedetail.navigation.QuoteIdArg
+import com.ch13mob.template.feature.postdetail.navigation.PostIdArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class QuoteDetailViewModel @Inject constructor(
+class PostDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val quoteId: Int = savedStateHandle[QuoteIdArg] ?: -1
+    val postId: Int = savedStateHandle[PostIdArg] ?: -1
 }

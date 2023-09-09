@@ -62,7 +62,7 @@ android {
 
             buildConfigString(
                 key = "BASE_URL",
-                value = "https://api.breakingbadquotes.xyz/"
+                value = "https://jsonplaceholder.typicode.com/"
             )
         }
         create("qa") {
@@ -72,7 +72,7 @@ android {
 
             buildConfigString(
                 key = "BASE_URL",
-                value = "https://api.breakingbadquotes.xyz/"
+                value = "https://jsonplaceholder.typicode.com/"
             )
         }
         create("prod") {
@@ -80,7 +80,7 @@ android {
 
             buildConfigString(
                 key = "BASE_URL",
-                value = "https://api.breakingbadquotes.xyz/"
+                value = "https://jsonplaceholder.typicode.com/"
             )
         }
     }

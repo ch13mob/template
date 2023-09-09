@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.quotes.component
+package com.ch13mob.template.feature.posts.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,42 +14,37 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.ch13mob.template.core.model.Quote
+import com.ch13mob.template.core.model.Post
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuoteCard(
+fun PostCard(
     modifier: Modifier = Modifier,
-    quote: Quote,
-    onQuoteClick: (Int) -> Unit,
+    post: Post,
+    onPostClick: (Int) -> Unit,
 ) {
     Card(
-        onClick = { onQuoteClick(quote.id) },
+        onClick = { onPostClick(post.id) },
     ) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .height(170.dp)
+                .height(150.dp)
                 .padding(16.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                text = "${quote.author}:",
+                text = post.title,
                 style = MaterialTheme.typography.headlineSmall,
-            )
-            Text(
-                text = "${quote.text}",
-                style = MaterialTheme.typography.bodyLarge,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                modifier = Modifier
-                    .padding(top = 26.dp)
-                    .align(Alignment.End),
-                style = MaterialTheme.typography.bodySmall,
-                text = quote.lastUpdatedTime()
+                text = post.body,
+                style = MaterialTheme.typography.bodyLarge,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

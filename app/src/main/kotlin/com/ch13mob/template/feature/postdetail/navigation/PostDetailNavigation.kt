@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.qoutedetail.navigation
+package com.ch13mob.template.feature.postdetail.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,36 +7,36 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.ch13mob.template.feature.qoutedetail.QuoteDetailRoute
+import com.ch13mob.template.feature.postdetail.PostDetailRoute
 
-const val QuoteDetailNavigationRoute = "quote_detail_route"
-const val QuoteIdArg = "quoteId"
+const val PostDetailNavigationRoute = "post_detail_route"
+const val PostIdArg = "postId"
 
-fun NavController.navigateToQuoteDetail(
+fun NavController.navigateToPostDetail(
     quoteId: Int = -1,
     navOptions: NavOptions? = null
 ) {
     this.navigate(
-        QuoteDetailNavigationRoute.plus("/$quoteId"),
+        PostDetailNavigationRoute.plus("/$quoteId"),
         navOptions
     )
 }
 
-fun NavGraphBuilder.quoteDetailScreen(
+fun NavGraphBuilder.postDetailScreen(
     onBackClick: () -> Unit
 ) {
     composable(
-        route = QuoteDetailNavigationRoute.plus("/{$QuoteIdArg}"),
+        route = PostDetailNavigationRoute.plus("/{$PostIdArg}"),
         arguments = listOf(
-            navArgument(QuoteIdArg) { type = NavType.IntType },
+            navArgument(PostIdArg) { type = NavType.IntType },
         ),
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "https://template.com/{$QuoteIdArg}"
+                uriPattern = "https://template.com/{$PostIdArg}"
             }
         ),
     ) {
-        QuoteDetailRoute(
+        PostDetailRoute(
             onBackClick = onBackClick
         )
     }
