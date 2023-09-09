@@ -20,10 +20,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ch13mob.template.R
 import com.ch13mob.template.core.designsystem.component.ProgressIndicator
+import com.ch13mob.template.core.model.Post
+import com.ch13mob.template.core.ui.DevicePreviews
+import com.ch13mob.template.core.ui.PostsPreviewParameterProvider
 import com.ch13mob.template.feature.posts.component.EmptyPostsPlaceholder
 import com.ch13mob.template.feature.posts.component.PostList
 
@@ -98,5 +102,18 @@ fun PostsScreen(
                 ProgressIndicator()
             }
         }
+    )
+}
+
+@DevicePreviews
+@Composable
+fun PostsScreenPreview(
+    @PreviewParameter(PostsPreviewParameterProvider::class)
+    posts: List<Post>
+) {
+    PostsScreen(
+        uiState = PostsUiState(posts = posts),
+        onEvent = {},
+        onPostClick = {}
     )
 }
