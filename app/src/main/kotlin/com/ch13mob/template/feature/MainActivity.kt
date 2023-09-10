@@ -101,14 +101,10 @@ class MainActivity : ComponentActivity() {
                             startDestination = PostsNavigationRoute,
                         ) {
                             postsScreen(
-                                onPostClick = { quoteId ->
-                                    navController.navigateToPostDetail(quoteId)
-                                }
+                                onPostClick = navController::navigateToPostDetail
                             )
                             postDetailScreen(
-                                onBackClick = {
-                                    navController.popBackStack()
-                                }
+                                onBackClick = navController::popBackStack
                             )
                         }
                     }
