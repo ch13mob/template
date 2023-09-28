@@ -1,6 +1,6 @@
 package com.ch13mob.template.core.network.retrofit
 
-import com.ch13mob.template.BuildConfig
+import com.ch13mob.template.core.BuildConfig
 import com.ch13mob.template.core.network.NetworkDataSource
 import com.ch13mob.template.core.network.model.NetworkPost
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory

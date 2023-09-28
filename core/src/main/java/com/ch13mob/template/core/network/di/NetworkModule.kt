@@ -1,6 +1,6 @@
 package com.ch13mob.template.core.network.di
 
-import com.ch13mob.template.BuildConfig
+import com.ch13mob.template.core.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
