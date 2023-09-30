@@ -78,9 +78,9 @@ fun HashtagsText(
     }
 
     ClickableText(
+        modifier = modifier,
         text = annotatedString,
         style = MaterialTheme.typography.bodyLarge,
-        modifier = modifier,
         onClick = { position ->
             val annotatedStringRange = annotatedStringList.first {
                 it.start < position && position < it.end
