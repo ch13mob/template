@@ -16,4 +16,8 @@ object MockData {
             )
         )
     }
+
+    object Hashtags {
+        const val text = "This is a #sample text with #hashtags"
+    }
 }
