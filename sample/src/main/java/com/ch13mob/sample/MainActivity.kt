@@ -31,6 +31,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ch13mob.sample.features.FeaturesScreen
 import com.ch13mob.sample.features.animatedcounter.AnimatedCounterScreen
+import com.ch13mob.sample.features.annotatedstring.AnnotatedStringScreen
 import com.ch13mob.sample.ui.theme.SampleTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    @Suppress("LongMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -80,12 +82,12 @@ class MainActivity : ComponentActivity() {
                         },
                         content = { paddingValues ->
                             NavHost(
+                                modifier = Modifier.padding(paddingValues),
                                 navController = navController,
                                 startDestination = Screen.Features.route
                             ) {
                                 composable(Screen.Features.route) {
                                     FeaturesScreen(
-                                        modifier = Modifier.padding(paddingValues),
                                         features = uiState.features,
                                         onFeatureClick = { route ->
                                             navController.navigate(route)
@@ -95,6 +97,9 @@ class MainActivity : ComponentActivity() {
 
                                 composable(Screen.AnimatedCounter.route) {
                                     AnimatedCounterScreen()
+                                }
+                                composable(Screen.AnnotatedString.route) {
+                                    AnnotatedStringScreen()
                                 }
                             }
                         }

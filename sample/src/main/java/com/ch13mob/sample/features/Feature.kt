@@ -9,5 +9,9 @@ enum class Feature(
     ANIMATED_COUNTER(
         title = "Animated counter",
         screen = Screen.AnimatedCounter
+    ),
+    ANNOTATED_STRING(
+        title = "Annotated String",
+        screen = Screen.AnnotatedString
     )
 }

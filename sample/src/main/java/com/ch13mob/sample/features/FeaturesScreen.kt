@@ -1,8 +1,8 @@
 package com.ch13mob.sample.features
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Divider
@@ -15,14 +15,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun FeaturesScreen(
-    modifier: Modifier = Modifier,
     features: List<Feature>,
     onFeatureClick: (String) -> Unit
 ) {
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp)
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         itemsIndexed(features) { index, item ->
             ListItem(
@@ -32,7 +30,7 @@ fun FeaturesScreen(
                 headlineContent = {
                     Text(
                         text = item.title,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleMedium,
                     )
                 }
             )
