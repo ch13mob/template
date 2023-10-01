@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.posts
+package com.ch13mob.feature.posts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

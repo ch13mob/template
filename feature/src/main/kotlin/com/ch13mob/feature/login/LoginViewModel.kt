@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.login
+package com.ch13mob.feature.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

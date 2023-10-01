@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.posts
+package com.ch13mob.feature.posts
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,11 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ch13mob.template.R
 import com.ch13mob.template.core.designsystem.component.ProgressIndicator
 import com.ch13mob.template.core.model.Post
 import com.ch13mob.template.core.ui.DevicePreviews
@@ -31,8 +29,8 @@ import com.ch13mob.template.core.ui.FontScalePreviews
 import com.ch13mob.template.core.ui.OrientationPreviews
 import com.ch13mob.template.core.ui.PostsPreviewParameterProvider
 import com.ch13mob.template.core.ui.ThemePreviews
-import com.ch13mob.template.feature.posts.component.EmptyPostsPlaceholder
-import com.ch13mob.template.feature.posts.component.PostList
+import com.ch13mob.feature.posts.component.EmptyPostsPlaceholder
+import com.ch13mob.feature.posts.component.PostList
 
 @Composable
 fun PostsRoute(
@@ -76,7 +74,7 @@ fun PostsScreen(
             CenterAlignedTopAppBar(
                 scrollBehavior = scrollBehavior,
                 title = {
-                    Text(text = stringResource(id = R.string.app_name))
+                    Text(text = "Posts")
                 },
                 actions = {
                     IconButton(onClick = { onEvent(PostsUiEvent.Logout) }) {

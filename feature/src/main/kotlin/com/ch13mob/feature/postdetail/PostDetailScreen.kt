@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.postdetail
+package com.ch13mob.feature.postdetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

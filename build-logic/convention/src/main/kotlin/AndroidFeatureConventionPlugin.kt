@@ -10,8 +10,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply {
-                apply("materialyounotes.android.library")
-                apply("materialyounotes.android.hilt")
+                apply("template.android.library")
+                apply("template.android.hilt")
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {
@@ -23,10 +23,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             dependencies {
-//                add("implementation", project(":core:model"))
-//                add("implementation", project(":core:designsystem"))
-//                add("implementation", project(":core:data"))
-//                add("implementation", project(":core:common"))
+                add("implementation", project(":core"))
 
                 add("implementation", libs.findLibrary("coil.kt").get())
                 add("implementation", libs.findLibrary("coil.kt.compose").get())

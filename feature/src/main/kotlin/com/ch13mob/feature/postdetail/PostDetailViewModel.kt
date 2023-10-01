@@ -1,8 +1,8 @@
-package com.ch13mob.template.feature.postdetail
+package com.ch13mob.feature.postdetail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.ch13mob.template.feature.postdetail.navigation.PostIdArg
+import com.ch13mob.feature.postdetail.navigation.PostIdArg
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

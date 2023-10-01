@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature
+package com.ch13mob.template
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -53,7 +53,7 @@ class MainViewModel @Inject constructor(
 
 sealed interface MainUiEvent {
     data class HandleDeeplink(val deeplink: Uri) : MainUiEvent
-    object DeeplinkConsumed : MainUiEvent
+    data object DeeplinkConsumed : MainUiEvent
 }
 
 data class MainUiState(

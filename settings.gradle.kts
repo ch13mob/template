@@ -17,4 +17,5 @@ dependencyResolutionManagement {
 rootProject.name = "template"
 include(":app")
 include(":core")
+include(":feature")
 include(":sample")

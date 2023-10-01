@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature
+package com.ch13mob.template
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":feature"))
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)

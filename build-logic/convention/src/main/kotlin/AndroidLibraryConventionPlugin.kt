@@ -3,11 +3,7 @@ import com.ch13mob.template.configureFlavors
 import com.ch13mob.template.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.kotlin
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -22,19 +18,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 defaultConfig.targetSdk = 34
                 configureFlavors(this)
             }
-
-//            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-//            configurations.configureEach {
-//                resolutionStrategy {
-//                    force(libs.findLibrary("junit4").get())
-//                    // Temporary workaround for https://issuetracker.google.com/174733673
-//                    force("org.objenesis:objenesis:2.6")
-//                }
-//            }
-//            dependencies {
-//                add("androidTestImplementation", kotlin("test"))
-//                add("testImplementation", kotlin("test"))
-//            }
         }
     }
 }

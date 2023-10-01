@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.login
+package com.ch13mob.feature.login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

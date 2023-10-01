@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature
+package com.ch13mob.template
 
 import android.content.Intent
 import android.os.Bundle
@@ -19,14 +19,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.ch13mob.template.core.designsystem.theme.TemplateTheme
-import com.ch13mob.template.feature.login.navigation.LoginNavigationGraph
-import com.ch13mob.template.feature.login.navigation.LoginNavigationRoute
-import com.ch13mob.template.feature.login.navigation.loginScreen
-import com.ch13mob.template.feature.postdetail.navigation.navigateToPostDetail
-import com.ch13mob.template.feature.postdetail.navigation.postDetailScreen
-import com.ch13mob.template.feature.posts.navigation.PostsNavigationGraph
-import com.ch13mob.template.feature.posts.navigation.PostsNavigationRoute
-import com.ch13mob.template.feature.posts.navigation.postsScreen
+import com.ch13mob.feature.login.navigation.loginScreen
+import com.ch13mob.feature.postdetail.navigation.navigateToPostDetail
+import com.ch13mob.feature.postdetail.navigation.postDetailScreen
+import com.ch13mob.feature.posts.navigation.postsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,11 +59,11 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(key1 = appState.isLoggedIn) {
                 if (appState.isLoggedIn) {
-                    navController.navigate(PostsNavigationGraph) {
+                    navController.navigate(com.ch13mob.feature.posts.navigation.PostsNavigationGraph) {
                         popUpTo(0)
                     }
                 } else {
-                    navController.navigate(LoginNavigationGraph) {
+                    navController.navigate(com.ch13mob.feature.login.navigation.LoginNavigationGraph) {
                         popUpTo(0)
                     }
                 }
@@ -87,18 +83,18 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = PostsNavigationGraph
+                        startDestination = com.ch13mob.feature.posts.navigation.PostsNavigationGraph
                     ) {
                         navigation(
-                            route = LoginNavigationGraph,
-                            startDestination = LoginNavigationRoute,
+                            route = com.ch13mob.feature.login.navigation.LoginNavigationGraph,
+                            startDestination = com.ch13mob.feature.login.navigation.LoginNavigationRoute,
                         ) {
                             loginScreen()
                         }
 
                         navigation(
-                            route = PostsNavigationGraph,
-                            startDestination = PostsNavigationRoute,
+                            route = com.ch13mob.feature.posts.navigation.PostsNavigationGraph,
+                            startDestination = com.ch13mob.feature.posts.navigation.PostsNavigationRoute,
                         ) {
                             postsScreen(
                                 onPostClick = navController::navigateToPostDetail

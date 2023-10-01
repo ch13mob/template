@@ -1,4 +1,4 @@
-package com.ch13mob.template.feature.posts.component
+package com.ch13mob.feature.posts.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
