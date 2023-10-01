@@ -18,11 +18,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.ch13mob.template.core.designsystem.theme.TemplateTheme
 import com.ch13mob.feature.login.navigation.loginScreen
 import com.ch13mob.feature.postdetail.navigation.navigateToPostDetail
 import com.ch13mob.feature.postdetail.navigation.postDetailScreen
 import com.ch13mob.feature.posts.navigation.postsScreen
+import com.ch13mob.template.core.designsystem.theme.TemplateTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

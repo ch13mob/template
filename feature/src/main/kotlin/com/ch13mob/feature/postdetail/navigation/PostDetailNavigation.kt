@@ -26,7 +26,9 @@ fun NavGraphBuilder.postDetailScreen(
     onBackClick: () -> Unit
 ) {
     composable(
-        route = com.ch13mob.feature.postdetail.navigation.PostDetailNavigationRoute.plus("/{${com.ch13mob.feature.postdetail.navigation.PostIdArg}}"),
+        route = com.ch13mob.feature.postdetail.navigation.PostDetailNavigationRoute.plus(
+            "/{${com.ch13mob.feature.postdetail.navigation.PostIdArg}}"
+        ),
         arguments = listOf(
             navArgument(com.ch13mob.feature.postdetail.navigation.PostIdArg) { type = NavType.IntType },
         ),

@@ -22,6 +22,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.ch13mob.feature.posts.component.EmptyPostsPlaceholder
+import com.ch13mob.feature.posts.component.PostList
 import com.ch13mob.template.core.designsystem.component.ProgressIndicator
 import com.ch13mob.template.core.model.Post
 import com.ch13mob.template.core.ui.DevicePreviews
@@ -29,8 +31,6 @@ import com.ch13mob.template.core.ui.FontScalePreviews
 import com.ch13mob.template.core.ui.OrientationPreviews
 import com.ch13mob.template.core.ui.PostsPreviewParameterProvider
 import com.ch13mob.template.core.ui.ThemePreviews
-import com.ch13mob.feature.posts.component.EmptyPostsPlaceholder
-import com.ch13mob.feature.posts.component.PostList
 
 @Composable
 fun PostsRoute(
