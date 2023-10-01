@@ -9,10 +9,10 @@ plugins {
 }
 
 android {
-    namespace = "com.ch13mob.template"
+    namespace = "com.ch13mob.sample"
 
     defaultConfig {
-        applicationId = "com.ch13mob.template"
+        applicationId = "com.ch13mob.sample"
         versionCode = 1
         versionName = "1.0.0"
 
@@ -32,7 +32,6 @@ android {
 
 dependencies {
     implementation(projects.core)
-    implementation(projects.feature)
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
@@ -41,6 +40,10 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
 
     detektPlugins(libs.detekt.formatting)
 }
