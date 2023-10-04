@@ -1,7 +1,7 @@
 package com.ch13mob.template.core.data.di
 
-import com.ch13mob.template.core.data.repository.DefaultPostRepository
 import com.ch13mob.template.core.data.repository.DefaultUserDataRepository
+import com.ch13mob.template.core.data.repository.OfflineFirstPostRepository
 import com.ch13mob.template.core.data.repository.PostRepository
 import com.ch13mob.template.core.data.repository.UserDataRepository
 import dagger.Binds
@@ -20,6 +20,6 @@ interface DataModule {
 
     @Binds
     fun bindsPostRepository(
-        postRepository: DefaultPostRepository,
+        postRepository: OfflineFirstPostRepository,
     ): PostRepository
 }

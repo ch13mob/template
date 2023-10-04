@@ -17,7 +17,7 @@ fun NavController.navigateToPostDetail(
     navOptions: NavOptions? = null
 ) {
     this.navigate(
-        com.ch13mob.feature.postdetail.navigation.PostDetailNavigationRoute.plus("/$quoteId"),
+        PostDetailNavigationRoute.plus("/$quoteId"),
         navOptions
     )
 }
@@ -26,15 +26,15 @@ fun NavGraphBuilder.postDetailScreen(
     onBackClick: () -> Unit
 ) {
     composable(
-        route = com.ch13mob.feature.postdetail.navigation.PostDetailNavigationRoute.plus(
-            "/{${com.ch13mob.feature.postdetail.navigation.PostIdArg}}"
+        route = PostDetailNavigationRoute.plus(
+            "/{$PostIdArg}"
         ),
         arguments = listOf(
-            navArgument(com.ch13mob.feature.postdetail.navigation.PostIdArg) { type = NavType.IntType },
+            navArgument(PostIdArg) { type = NavType.IntType },
         ),
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "https://template.com/{${com.ch13mob.feature.postdetail.navigation.PostIdArg}}"
+                uriPattern = "https://template.com/{$PostIdArg}"
             }
         ),
     ) {

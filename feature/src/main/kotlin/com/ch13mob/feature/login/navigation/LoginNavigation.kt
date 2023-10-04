@@ -8,7 +8,7 @@ const val LoginNavigationGraph = "login_graph"
 const val LoginNavigationRoute = "login_route"
 
 fun NavGraphBuilder.loginScreen() {
-    composable(route = com.ch13mob.feature.login.navigation.LoginNavigationRoute) {
+    composable(route = LoginNavigationRoute) {
         LoginRoute()
     }
 }

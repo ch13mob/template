@@ -38,4 +38,8 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlin.serialization)
+
+    implementation(libs.androidx.work.ktx)
+    implementation(libs.hilt.ext.work)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 }
