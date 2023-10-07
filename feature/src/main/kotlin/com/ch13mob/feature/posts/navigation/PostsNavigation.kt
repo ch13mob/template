@@ -10,7 +10,7 @@ const val PostsNavigationRoute = "posts_route"
 fun NavGraphBuilder.postsScreen(
     onPostClick: (Int) -> Unit,
 ) {
-    composable(route = com.ch13mob.feature.posts.navigation.PostsNavigationRoute) {
+    composable(route = PostsNavigationRoute) {
         PostsRoute(
             onPostClick = onPostClick
         )

@@ -1,9 +1,8 @@
 package com.ch13mob.template.core.database.dao
 
 import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import com.ch13mob.template.core.database.model.PostEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -16,6 +15,6 @@ interface PostDao {
     @Query(value = "SELECT * FROM post WHERE id =:id")
     fun getPostById(id: Int): Flow<PostEntity>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPosts(quotes: List<PostEntity>)
+    @Upsert
+    suspend fun upsertPosts(posts: List<PostEntity>)
 }

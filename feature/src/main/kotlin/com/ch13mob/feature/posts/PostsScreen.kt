@@ -1,5 +1,8 @@
 package com.ch13mob.feature.posts
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Logout
@@ -37,10 +40,14 @@ fun PostsRoute(
     viewModel: PostsViewModel = hiltViewModel(),
     onPostClick: (Int) -> Unit,
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val postsState by viewModel.postsState.collectAsStateWithLifecycle()
+    val sessionState by viewModel.sessionState.collectAsStateWithLifecycle()
+    val isSyncing by viewModel.isSyncing.collectAsStateWithLifecycle()
 
     PostsScreen(
-        uiState = uiState,
+        postsState = postsState,
+        sessionState = sessionState,
+        isSyncing = isSyncing,
         onEvent = viewModel::onEvent,
         onPostClick = onPostClick
     )
@@ -50,20 +57,31 @@ fun PostsRoute(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PostsScreen(
-    uiState: PostsUiState,
+    postsState: PostsUiState,
+    sessionState: SessionUiState,
+    isSyncing: Boolean,
     onEvent: (PostsUiEvent) -> Unit,
     onPostClick: (Int) -> Unit
 ) {
+    val isPostsLoading = postsState is PostsUiState.Loading
+    val isLogoutLoading = sessionState is SessionUiState.Loading
+
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(uiState.errorMessage != null) {
-        uiState.errorMessage?.let { errorMessage ->
-            snackbarHostState.showSnackbar(
-                message = errorMessage,
-                duration = SnackbarDuration.Short
-            )
-            onEvent(PostsUiEvent.ErrorConsumed)
+    LaunchedEffect(postsState is PostsUiState.Error) {
+        when (postsState) {
+            PostsUiState.Loading -> Unit
+            is PostsUiState.Success -> Unit
+            is PostsUiState.Error -> {
+                postsState.errorMessage?.let { errorMessage ->
+                    snackbarHostState.showSnackbar(
+                        message = errorMessage,
+                        duration = SnackbarDuration.Short
+                    )
+                    onEvent(PostsUiEvent.ErrorConsumed)
+                }
+            }
         }
     }
 
@@ -87,19 +105,29 @@ fun PostsScreen(
             )
         },
         content = { paddingValues ->
-            if (uiState.posts.isEmpty()) {
-                EmptyPostsPlaceholder(
-                    modifier = Modifier.padding(paddingValues)
-                )
-            } else {
-                PostList(
-                    modifier = Modifier.padding(paddingValues),
-                    posts = uiState.posts,
-                    onPostClick = onPostClick,
-                )
+            when (postsState) {
+                PostsUiState.Loading -> Unit
+                is PostsUiState.Error -> TODO()
+                is PostsUiState.Success -> {
+                    if (postsState.posts.isEmpty()) {
+                        EmptyPostsPlaceholder(
+                            modifier = Modifier.padding(paddingValues)
+                        )
+                    } else {
+                        PostList(
+                            modifier = Modifier.padding(paddingValues),
+                            posts = postsState.posts,
+                            onPostClick = onPostClick,
+                        )
+                    }
+                }
             }
 
-            if (uiState.isLoading) {
+            AnimatedVisibility(
+                visible = isSyncing || isLogoutLoading || isPostsLoading,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
                 ProgressIndicator()
             }
         }
@@ -116,8 +144,11 @@ fun PostsScreenPreview(
     posts: List<Post>
 ) {
     PostsScreen(
-        uiState = PostsUiState(posts = posts),
+        postsState = PostsUiState.Success(posts = posts),
+        sessionState = SessionUiState.LoggedIn,
+        isSyncing = false,
         onEvent = {},
         onPostClick = {}
     )
 }
+

@@ -18,9 +18,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.ch13mob.feature.login.navigation.LoginNavigationGraph
+import com.ch13mob.feature.login.navigation.LoginNavigationRoute
 import com.ch13mob.feature.login.navigation.loginScreen
 import com.ch13mob.feature.postdetail.navigation.navigateToPostDetail
 import com.ch13mob.feature.postdetail.navigation.postDetailScreen
+import com.ch13mob.feature.posts.navigation.PostsNavigationGraph
 import com.ch13mob.feature.posts.navigation.postsScreen
 import com.ch13mob.template.core.designsystem.theme.TemplateTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,11 +62,11 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(key1 = appState.isLoggedIn) {
                 if (appState.isLoggedIn) {
-                    navController.navigate(com.ch13mob.feature.posts.navigation.PostsNavigationGraph) {
+                    navController.navigate(PostsNavigationGraph) {
                         popUpTo(0)
                     }
                 } else {
-                    navController.navigate(com.ch13mob.feature.login.navigation.LoginNavigationGraph) {
+                    navController.navigate(LoginNavigationGraph) {
                         popUpTo(0)
                     }
                 }
@@ -83,17 +86,17 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = com.ch13mob.feature.posts.navigation.PostsNavigationGraph
+                        startDestination = PostsNavigationGraph
                     ) {
                         navigation(
-                            route = com.ch13mob.feature.login.navigation.LoginNavigationGraph,
-                            startDestination = com.ch13mob.feature.login.navigation.LoginNavigationRoute,
+                            route = LoginNavigationGraph,
+                            startDestination = LoginNavigationRoute,
                         ) {
                             loginScreen()
                         }
 
                         navigation(
-                            route = com.ch13mob.feature.posts.navigation.PostsNavigationGraph,
+                            route = PostsNavigationGraph,
                             startDestination = com.ch13mob.feature.posts.navigation.PostsNavigationRoute,
                         ) {
                             postsScreen(
