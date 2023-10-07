@@ -5,4 +5,5 @@ sealed class Screen(val route: String) {
     data object AnimatedCounter : Screen("counter")
     data object AnnotatedString : Screen("terms")
     data object PhotoPicker : Screen("photo_picker")
+    data object TextSelection : Screen("text_selection")
 }

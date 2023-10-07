@@ -33,6 +33,7 @@ import com.ch13mob.sample.features.FeaturesScreen
 import com.ch13mob.sample.features.animatedcounter.AnimatedCounterScreen
 import com.ch13mob.sample.features.annotatedstring.AnnotatedStringScreen
 import com.ch13mob.sample.features.photopicker.PhotoPickerScreen
+import com.ch13mob.sample.features.textselection.TextSelectionScreen
 import com.ch13mob.sample.ui.theme.SampleTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -104,6 +105,9 @@ class MainActivity : ComponentActivity() {
                                 }
                                 composable(Screen.PhotoPicker.route) {
                                     PhotoPickerScreen()
+                                }
+                                composable(Screen.TextSelection.route) {
+                                    TextSelectionScreen()
                                 }
                             }
                         }

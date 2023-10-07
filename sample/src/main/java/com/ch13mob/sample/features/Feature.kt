@@ -17,5 +17,9 @@ enum class Feature(
     PHOTO_PICKER(
         title = "Photo picker",
         screen = Screen.PhotoPicker
+    ),
+    TEXT_SELECTION(
+        title = "Text selection",
+        screen = Screen.TextSelection
     )
 }
