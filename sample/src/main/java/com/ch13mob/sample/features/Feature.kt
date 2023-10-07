@@ -21,5 +21,9 @@ enum class Feature(
     TEXT_SELECTION(
         title = "Text selection",
         screen = Screen.TextSelection
+    ),
+    MARQUEE_TEXT(
+        title = "Marquee text",
+        screen = Screen.MarqueeText
     )
 }
