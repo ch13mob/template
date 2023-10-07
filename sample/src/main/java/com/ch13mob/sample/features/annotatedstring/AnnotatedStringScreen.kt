@@ -8,16 +8,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.ch13mob.sample.features.annotatedstring.component.HashtagsText
+import com.ch13mob.sample.features.annotatedstring.component.SubscriptText
+import com.ch13mob.sample.features.annotatedstring.component.SuperscriptText
 import com.ch13mob.sample.features.annotatedstring.component.TermsAndConditionsText
 
 @Composable
 fun AnnotatedStringScreen() {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val context = LocalContext.current
 
@@ -37,6 +41,16 @@ fun AnnotatedStringScreen() {
             onTagClick = { tag ->
                 Toast.makeText(context, "$tag clicked.", Toast.LENGTH_SHORT).show()
             }
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        SuperscriptText(
+            normalText = "X",
+            superText = "2"
+        )
+        Spacer(modifier = Modifier.height(24.dp))
+        SubscriptText(
+            normalText = "O",
+            subText = "2"
         )
     }
 }
