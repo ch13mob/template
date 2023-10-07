@@ -13,5 +13,9 @@ enum class Feature(
     ANNOTATED_STRING(
         title = "Annotated String",
         screen = Screen.AnnotatedString
+    ),
+    PHOTO_PICKER(
+        title = "Photo picker",
+        screen = Screen.PhotoPicker
     )
 }
