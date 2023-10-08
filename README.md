@@ -15,8 +15,14 @@ Template for a new project.
 - Clean and Rebuild the project
 
 ## [Detekt](https://github.com/detekt/detekt)
-Auto correct code:
+Run detekt in all modules:
 
 ```shell
-./gradlew detekt --auto-correct
+./gradlew detektAll
+```
+
+Auto correct code in all modules:
+
+```shell
+./gradlew detektAll --auto-correct
 ```
