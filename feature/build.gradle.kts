@@ -1,6 +1,6 @@
 plugins {
-    id("template.android.feature")
-    id("template.android.library.compose")
+    alias(libs.plugins.template.android.feature)
+    alias(libs.plugins.template.android.library.compose)
 }
 
 android {

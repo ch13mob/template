@@ -1,8 +1,8 @@
 plugins {
-    id("template.android.application")
-    id("template.android.application.compose")
-    id("template.android.application.flavors")
-    id("template.android.hilt")
+    alias(libs.plugins.template.android.application)
+    alias(libs.plugins.template.android.application.compose)
+    alias(libs.plugins.template.android.application.flavors)
+    alias(libs.plugins.template.android.hilt)
     id("kotlin-parcelize")
     id("kotlinx-serialization")
 }

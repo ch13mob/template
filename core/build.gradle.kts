@@ -1,8 +1,8 @@
 plugins {
-    id("template.android.library")
-    id("template.android.hilt")
-    id("template.android.room")
-    id("template.android.library.compose")
+    alias(libs.plugins.template.android.library)
+    alias(libs.plugins.template.android.hilt)
+    alias(libs.plugins.template.android.room)
+    alias(libs.plugins.template.android.library.compose)
     id("kotlinx-serialization")
 }
 
