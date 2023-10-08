@@ -7,29 +7,27 @@ import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.ProductFlavor
 import org.gradle.api.Project
 
-@Suppress("EnumEntryName")
 enum class FlavorDimension {
-    main
+    Main
 }
 
-@Suppress("EnumEntryName")
 enum class AppFlavor(
     val dimension: FlavorDimension,
     val applicationIdSuffix: String? = null,
     val baseUrl: String
 ) {
-    dev(
-        dimension = FlavorDimension.main,
+    Dev(
+        dimension = FlavorDimension.Main,
         applicationIdSuffix = ".dev",
         baseUrl = "https://jsonplaceholder.typicode.com/"
     ),
-    qa(
-        dimension = FlavorDimension.main,
+    Qa(
+        dimension = FlavorDimension.Main,
         applicationIdSuffix = ".qa",
         baseUrl = "https://jsonplaceholder.typicode.com/"
     ),
-    prod(
-        dimension = FlavorDimension.main,
+    Prod(
+        dimension = FlavorDimension.Main,
         baseUrl = "https://jsonplaceholder.typicode.com/"
     )
 }
@@ -39,7 +37,7 @@ fun Project.configureFlavors(
     flavorConfigurationBlock: ProductFlavor.(flavor: AppFlavor) -> Unit = {}
 ) {
     commonExtension.apply {
-        flavorDimensions += FlavorDimension.main.name
+        flavorDimensions += FlavorDimension.Main.name
         productFlavors {
             AppFlavor.values().forEach {
                 create(it.name) {

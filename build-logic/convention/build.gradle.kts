@@ -12,7 +12,6 @@ java {
 dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
-    compileOnly(libs.detekt.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
 }
 
@@ -49,10 +48,6 @@ gradlePlugin {
         register("androidFlavors") {
             id = "template.android.application.flavors"
             implementationClass = "AndroidApplicationFlavorsConventionPlugin"
-        }
-        register("kotlinDetekt") {
-            id = "template.kotlin.detekt"
-            implementationClass = "DetektConventionPlugin"
         }
     }
 }

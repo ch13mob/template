@@ -2,7 +2,6 @@ plugins {
     id("template.android.application")
     id("template.android.application.compose")
     id("template.android.application.flavors")
-    id("template.kotlin.detekt")
     id("template.android.hilt")
     id("kotlin-parcelize")
     id("kotlinx-serialization")
@@ -45,14 +44,4 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
-//    ksp(libs.hilt.compiler)
-
-    detektPlugins(libs.detekt.formatting)
-}
-
-detekt {
-    config.setFrom(project.file("$rootDir/config/detekt/detekt.yml"))
-    parallel = true
-    buildUponDefaultConfig = true
-    autoCorrect = true
 }

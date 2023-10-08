@@ -1,6 +1,5 @@
 plugins {
     id("template.android.library")
-    id("template.kotlin.detekt")
     id("template.android.hilt")
     id("template.android.room")
     id("template.android.library.compose")
