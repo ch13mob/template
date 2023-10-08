@@ -21,7 +21,7 @@ interface HiltWorkerFactoryEntryPoint {
     fun hiltWorkerFactory(): HiltWorkerFactory
 }
 
-private const val WORKER_CLASS_NAME = "RouterWorkerDelegateClassName"
+private const val WorkerClassName = "RouterWorkerDelegateClassName"
 
 /**
  * Adds metadata to a WorkRequest to identify what [CoroutineWorker] the [DelegatingWorker] should
@@ -29,7 +29,7 @@ private const val WORKER_CLASS_NAME = "RouterWorkerDelegateClassName"
  */
 internal fun KClass<out CoroutineWorker>.delegatedData() =
     Data.Builder()
-        .putString(WORKER_CLASS_NAME, qualifiedName)
+        .putString(WorkerClassName, qualifiedName)
         .build()
 
 /**
@@ -47,7 +47,7 @@ class DelegatingWorker(
 ) : CoroutineWorker(appContext, workerParams) {
 
     private val workerClassName =
-        workerParams.inputData.getString(WORKER_CLASS_NAME) ?: ""
+        workerParams.inputData.getString(WorkerClassName) ?: ""
 
     private val delegateWorker =
         EntryPointAccessors.fromApplication<HiltWorkerFactoryEntryPoint>(appContext)

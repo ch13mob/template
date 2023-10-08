@@ -11,8 +11,8 @@ import androidx.work.ForegroundInfo
 import androidx.work.NetworkType
 import com.ch13mob.template.core.R
 
-private const val SYNC_NOTIFICATION_ID = 0
-private const val SYNC_NOTIFICATION_CHANNEL_ID = "SyncNotificationChannel"
+private const val SyncNotificationId = 0
+private const val SyncNotificationChannelId = "SyncNotificationChannel"
 
 // All sync work needs an internet connections
 val SyncConstraints
@@ -25,7 +25,7 @@ val SyncConstraints
  * run with a foreground service
  */
 fun Context.syncForegroundInfo() = ForegroundInfo(
-    SYNC_NOTIFICATION_ID,
+    SyncNotificationId,
     syncWorkNotification(),
 )
 
@@ -36,7 +36,7 @@ fun Context.syncForegroundInfo() = ForegroundInfo(
 private fun Context.syncWorkNotification(): Notification {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val channel = NotificationChannel(
-            SYNC_NOTIFICATION_CHANNEL_ID,
+            SyncNotificationChannelId,
             getString(R.string.sync_notification_channel_name),
             NotificationManager.IMPORTANCE_DEFAULT,
         ).apply {
@@ -51,7 +51,7 @@ private fun Context.syncWorkNotification(): Notification {
 
     return NotificationCompat.Builder(
         this,
-        SYNC_NOTIFICATION_CHANNEL_ID,
+        SyncNotificationChannelId,
     )
         .setSmallIcon(
             R.drawable.ic_notification,
