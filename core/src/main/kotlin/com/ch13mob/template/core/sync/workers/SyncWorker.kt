@@ -13,7 +13,6 @@ import com.ch13mob.template.core.data.Synchronizer
 import com.ch13mob.template.core.data.repository.PostRepository
 import com.ch13mob.template.core.sync.initializers.SyncConstraints
 import com.ch13mob.template.core.sync.initializers.syncForegroundInfo
-import com.ch13mob.template.core.sync.status.SyncSubscriber
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -30,16 +29,13 @@ class SyncWorker @AssistedInject constructor(
     @Assisted private val appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val postRepository: PostRepository,
-    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
-    private val syncSubscriber: SyncSubscriber,
+    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher
 ) : CoroutineWorker(appContext, workerParams), Synchronizer {
 
     override suspend fun getForegroundInfo(): ForegroundInfo =
         appContext.syncForegroundInfo()
 
     override suspend fun doWork(): Result = withContext(ioDispatcher) {
-        syncSubscriber.subscribe()
-
         // First sync the repositories in parallel
         val syncedSuccessfully = awaitAll(
             async { postRepository.sync() },
