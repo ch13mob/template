@@ -7,4 +7,5 @@ sealed class Screen(val route: String) {
     data object PhotoPicker : Screen("photo_picker")
     data object TextSelection : Screen("text_selection")
     data object MarqueeText : Screen("marquee_text")
+    data object WebView : Screen("web_view")
 }

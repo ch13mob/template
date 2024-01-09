@@ -35,6 +35,7 @@ import com.sample.features.annotatedstring.AnnotatedStringScreen
 import com.sample.features.marqueetext.MarqueeTextScreen
 import com.sample.features.photopicker.PhotoPickerScreen
 import com.sample.features.textselection.TextSelectionScreen
+import com.sample.features.webview.WebViewScreen
 import com.sample.ui.theme.SampleTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -112,6 +113,9 @@ class MainActivity : ComponentActivity() {
                                 }
                                 composable(Screen.MarqueeText.route) {
                                     MarqueeTextScreen()
+                                }
+                                composable(Screen.WebView.route) {
+                                    WebViewScreen()
                                 }
                             }
                         }
