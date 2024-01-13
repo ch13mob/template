@@ -25,5 +25,9 @@ enum class Feature(
     MARQUEE_TEXT(
         title = "Marquee text",
         screen = Screen.MarqueeText
+    ),
+    WEB_VIEW(
+        title = "WebView",
+        screen = Screen.WebView
     )
 }
