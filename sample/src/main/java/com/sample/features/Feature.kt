@@ -29,5 +29,9 @@ enum class Feature(
     WEB_VIEW(
         title = "WebView",
         screen = Screen.WebView
+    ),
+    TAB_ROW_HORIZONTAL_PAGER(
+        title = "TabRow with HorizontalPager",
+        screen = Screen.TabRowHorizontalPager
     )
 }
