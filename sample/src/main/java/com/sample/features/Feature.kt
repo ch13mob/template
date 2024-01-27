@@ -7,7 +7,7 @@ enum class Feature(
     val screen: Screen
 ) {
     ANIMATED_COUNTER(
-        title = "Animated counter",
+        title = "Animated counter11",
         screen = Screen.AnimatedCounter
     ),
     ANNOTATED_STRING(
