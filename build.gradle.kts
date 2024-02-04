@@ -7,18 +7,11 @@ plugins {
     alias(libs.plugins.detekt)
 }
 
-buildscript {
-    dependencies {
-        classpath(libs.gradle.versions)
-    }
-}
-
 dependencies {
     detektPlugins(libs.detekt.formatting)
 }
 
 apply(from = "buildscripts/setup.gradle")
-apply(from = "buildscripts/versionsplugin.gradle")
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.layout.buildDirectory)
