@@ -34,6 +34,7 @@ import com.sample.features.animatedcounter.AnimatedCounterScreen
 import com.sample.features.annotatedstring.AnnotatedStringScreen
 import com.sample.features.marqueetext.MarqueeTextScreen
 import com.sample.features.photopicker.PhotoPickerScreen
+import com.sample.features.scanner.DocumentScannerScreen
 import com.sample.features.tabrow.TabRowHorizontalPagerScreen
 import com.sample.features.textselection.TextSelectionScreen
 import com.sample.features.webview.WebViewScreen
@@ -120,6 +121,9 @@ class MainActivity : ComponentActivity() {
                                 }
                                 composable(Screen.TabRowHorizontalPager.route) {
                                     TabRowHorizontalPagerScreen()
+                                }
+                                composable(Screen.DocumentScanner.route) {
+                                    DocumentScannerScreen()
                                 }
                             }
                         }

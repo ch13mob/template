@@ -33,5 +33,9 @@ enum class Feature(
     TAB_ROW_HORIZONTAL_PAGER(
         title = "TabRow with HorizontalPager",
         screen = Screen.TabRowHorizontalPager
+    ),
+    DOCUMENT_SCANNER(
+        title = "Document scanner",
+        screen = Screen.DocumentScanner
     )
 }

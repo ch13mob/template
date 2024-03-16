@@ -9,4 +9,5 @@ sealed class Screen(val route: String) {
     data object MarqueeText : Screen("marquee_text")
     data object WebView : Screen("web_view")
     data object TabRowHorizontalPager : Screen("tab_row_horizontal_pager")
+    data object DocumentScanner : Screen("document_scanner")
 }
