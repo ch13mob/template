@@ -4,8 +4,8 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.detekt)
-    id("kotlin-parcelize")
-    id("kotlinx-serialization")
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -79,4 +79,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
+
+    //noinspection UseTomlInstead
+    implementation("com.google.android.gms:play-services-mlkit-document-scanner:16.0.0-beta1")
 }
