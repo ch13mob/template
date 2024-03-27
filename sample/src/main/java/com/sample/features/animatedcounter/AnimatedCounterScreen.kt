@@ -65,9 +65,9 @@ fun AnimatedCounterScreen() {
                                     slideInVertically { it } togetherWith slideOutVertically { -it }
                                 }
                             },
-                        ) { digit ->
+                        ) {
                             Text(
-                                "${digit.digitChar}",
+                                "${it.digitChar}",
                                 style = MaterialTheme.typography.displayLarge,
                                 textAlign = TextAlign.Center,
                             )
