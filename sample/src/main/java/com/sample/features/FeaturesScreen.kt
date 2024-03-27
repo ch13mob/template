@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,7 +36,7 @@ fun FeaturesScreen(
             )
 
             if (index < features.lastIndex) {
-                Divider(thickness = 0.2.dp)
+                HorizontalDivider(thickness = 0.2.dp)
             }
         }
     }

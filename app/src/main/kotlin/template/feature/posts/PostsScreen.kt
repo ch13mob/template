@@ -5,7 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Logout
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -76,7 +76,7 @@ fun PostsScreen(
                     onClick = { onEvent(PostsUiEvent.Logout) }
                 ) {
                     Icon(
-                        Icons.Default.Logout,
+                        Icons.AutoMirrored.Default.Logout,
                         contentDescription = "Logout button"
                     )
                 }

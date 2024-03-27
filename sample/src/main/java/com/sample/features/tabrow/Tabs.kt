@@ -1,11 +1,11 @@
 package com.sample.features.tabrow
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.List
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -15,8 +15,8 @@ enum class Tabs(
     val title: String
 ) {
     List(
-        unselectedIcon = Icons.Outlined.List,
-        selectedIcon = Icons.Filled.List,
+        unselectedIcon = Icons.AutoMirrored.Outlined.List,
+        selectedIcon = Icons.AutoMirrored.Filled.List,
         title = "List"
     ),
     Favourite(
