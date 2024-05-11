@@ -28,22 +28,23 @@ class MainViewModel @Inject constructor(
 
     val userAuth: StateFlow<UserAuthState> = userDataRepository.userData
         .map { userData ->
-            UserAuthState(
-                isLoading = false,
-                isLoggedIn = userData.isLoggedIn
-            )
+            if (userData.isLoggedIn) {
+                UserAuthState.LoggedIn
+            } else {
+                UserAuthState.LoggedOut
+            }
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = UserAuthState(isLoading = true)
+            initialValue = UserAuthState.Loading
         )
 
     fun onEvent(event: MainUiEvent) {
         when (event) {
-            is MainUiEvent.HandleDeeplink -> handleDeeplink(event.deeplink)
+            is MainUiEvent.Deeplink -> handleDeeplink(event.deeplinkUri)
             is MainUiEvent.DeeplinkConsumed -> onDeeplinkConsumed()
-            is MainUiEvent.HandleError -> handleError(event.error)
+            is MainUiEvent.Error -> handleError(event.error)
             is MainUiEvent.ErrorConsumed -> onErrorConsumed()
         }
     }
@@ -66,9 +67,9 @@ class MainViewModel @Inject constructor(
 }
 
 sealed interface MainUiEvent {
-    data class HandleDeeplink(val deeplink: Uri) : MainUiEvent
+    data class Deeplink(val deeplinkUri: Uri) : MainUiEvent
     data object DeeplinkConsumed : MainUiEvent
-    data class HandleError(val error: Error) : MainUiEvent
+    data class Error(val error: template.core.common.error.Error) : MainUiEvent
     data object ErrorConsumed : MainUiEvent
 }
 
@@ -76,7 +77,8 @@ data class MainUiState(
     val error: Error? = null
 )
 
-data class UserAuthState(
-    val isLoading: Boolean = false,
-    val isLoggedIn: Boolean = true
-)
+sealed interface UserAuthState {
+    data object Loading : UserAuthState
+    data object LoggedIn : UserAuthState
+    data object LoggedOut : UserAuthState
+}

@@ -5,9 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -28,8 +25,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -37,14 +36,10 @@ import kotlinx.coroutines.launch
 import template.core.designsystem.theme.TemplateTheme
 import template.core.ui.component.Snackbar
 import template.core.ui.extensions.message
-import template.feature.login.navigation.LoginNavigationGraph
-import template.feature.login.navigation.LoginNavigationRoute
-import template.feature.login.navigation.loginScreen
-import template.feature.postdetail.navigation.navigateToPostDetail
-import template.feature.postdetail.navigation.postDetailScreen
-import template.feature.posts.navigation.PostsNavigationGraph
-import template.feature.posts.navigation.PostsNavigationRoute
-import template.feature.posts.navigation.postsScreen
+import template.feature.launch.LaunchRoute
+import template.feature.login.LoginRoute
+import template.feature.postdetail.PostDetailRoute
+import template.feature.posts.PostsRoute
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -54,7 +49,7 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         intent?.data?.let {
-            viewModel.onEvent(MainUiEvent.HandleDeeplink(it))
+            viewModel.onEvent(MainUiEvent.Deeplink(it))
         }
         intent = null
     }
@@ -64,7 +59,7 @@ class MainActivity : ComponentActivity() {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        var userAuth: UserAuthState by mutableStateOf(UserAuthState(isLoading = true))
+        var userAuth: UserAuthState by mutableStateOf(UserAuthState.Loading)
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -77,7 +72,7 @@ class MainActivity : ComponentActivity() {
         }
 
         splashScreen.setKeepOnScreenCondition {
-            userAuth.isLoading
+            userAuth is UserAuthState.Loading
         }
 
         setContent {
@@ -90,7 +85,7 @@ class MainActivity : ComponentActivity() {
             DisposableEffect(Unit) {
                 val listener = Consumer<Intent> { intent ->
                     intent.data?.let {
-                        viewModel.onEvent(MainUiEvent.HandleDeeplink(it))
+                        viewModel.onEvent(MainUiEvent.Deeplink(it))
                         this@MainActivity.intent = null
                     }
                 }
@@ -98,19 +93,25 @@ class MainActivity : ComponentActivity() {
                 onDispose { removeOnNewIntentListener(listener) }
             }
 
-            LaunchedEffect(userAuth.isLoggedIn) {
-                val route = if (userAuth.isLoggedIn) {
-                    PostsNavigationGraph
-                } else {
-                    LoginNavigationGraph
-                }
+            LaunchedEffect(userAuth) {
+                when (userAuth) {
+                    UserAuthState.LoggedIn -> {
+                        navController.navigate(NavigationGraph.Posts) { popUpTo(0) }
+                    }
 
-                navController.navigate(route) { popUpTo(0) }
+                    UserAuthState.LoggedOut -> {
+                        navController.navigate(NavigationGraph.Login) { popUpTo(0) }
+                    }
+
+                    else -> {
+                        // no-op
+                    }
+                }
             }
 
-            LaunchedEffect(deeplink != null && userAuth.isLoggedIn) {
+            LaunchedEffect(deeplink, userAuth) {
                 deeplink?.let { deeplink ->
-                    if (userAuth.isLoggedIn) {
+                    if (userAuth is UserAuthState.LoggedIn) {
                         navController.navigate(deeplink)
                         viewModel.onEvent(MainUiEvent.DeeplinkConsumed)
                     }
@@ -131,34 +132,47 @@ class MainActivity : ComponentActivity() {
                         snackbarHost = { SnackbarHost(snackbarHostState) },
                         content = { paddingValues ->
                             NavHost(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(paddingValues),
+                                modifier = Modifier.padding(paddingValues),
                                 navController = navController,
-                                enterTransition = { EnterTransition.None },
-                                exitTransition = { ExitTransition.None },
-                                startDestination = PostsNavigationGraph
+                                startDestination = Screen.Launch,
                             ) {
-                                navigation(
-                                    route = LoginNavigationGraph,
-                                    startDestination = LoginNavigationRoute,
-                                ) {
-                                    loginScreen(
-                                        onError = { viewModel.onEvent(MainUiEvent.HandleError(it)) }
-                                    )
+                                composable<Screen.Launch> {
+                                    LaunchRoute()
                                 }
 
-                                navigation(
-                                    route = PostsNavigationGraph,
-                                    startDestination = PostsNavigationRoute,
+                                navigation<NavigationGraph.Login>(
+                                    startDestination = Screen.Login
                                 ) {
-                                    postsScreen(
-                                        onError = { viewModel.onEvent(MainUiEvent.HandleError(it)) },
-                                        onPostClick = navController::navigateToPostDetail
-                                    )
-                                    postDetailScreen(
-                                        onBackClick = navController::popBackStack
-                                    )
+                                    composable<Screen.Login> {
+                                        LoginRoute(
+                                            onError = { viewModel.onEvent(MainUiEvent.Error(it)) }
+                                        )
+                                    }
+                                }
+
+                                navigation<NavigationGraph.Posts>(
+                                    startDestination = Screen.Posts,
+                                ) {
+                                    composable<Screen.Posts> {
+                                        PostsRoute(
+                                            onError = { viewModel.onEvent(MainUiEvent.Error(it)) },
+                                            onPostClick = { postId ->
+                                                navController.navigate(Screen.PostDetail(postId = postId))
+                                            }
+                                        )
+                                    }
+
+                                    composable<Screen.PostDetail>(
+                                        deepLinks = listOf(
+                                            navDeepLink {
+                                                uriPattern = Screen.PostDetail.DeepLinkUriPattern
+                                            }
+                                        ),
+                                    ) {
+                                        PostDetailRoute(
+                                            onBackClick = navController::navigateUp
+                                        )
+                                    }
                                 }
                             }
                         }
