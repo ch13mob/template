@@ -35,7 +35,9 @@ fun PostDetailScreen(
     postId: Int,
     onBackClick: () -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
         TopAppBar(
             navigationIcon = {
                 IconButton(onClick = onBackClick) {
