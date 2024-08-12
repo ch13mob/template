@@ -6,8 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import template.core.common.error.Error
@@ -40,7 +38,7 @@ class PostsViewModel @Inject constructor(
     private fun getPosts() {
         viewModelScope.launch {
             postRepository.getPosts()
-                .onEach { result ->
+                .collect { result ->
                     _uiState.update { it.copy(isLoading = false) }
 
                     result.fold(
@@ -52,7 +50,6 @@ class PostsViewModel @Inject constructor(
                         }
                     )
                 }
-                .launchIn(viewModelScope)
         }
     }
 
