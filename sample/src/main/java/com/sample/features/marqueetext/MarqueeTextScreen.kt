@@ -1,6 +1,5 @@
 package com.sample.features.marqueetext
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MarqueeTextScreen() {
     Box(
@@ -26,7 +24,7 @@ fun MarqueeTextScreen() {
                 .padding(vertical = 12.dp)
                 .basicMarquee(
                     iterations = Int.MAX_VALUE,
-                    delayMillis = 0,
+                    repeatDelayMillis = 0,
                     initialDelayMillis = 0
                 ),
             text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

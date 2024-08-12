@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -21,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import template.core.common.error.Error
 import template.core.model.Post
-import template.core.ui.component.ProgressIndicator
+import template.core.ui.component.AppErrorSnackbar
+import template.core.ui.component.AppProgressIndicator
 import template.core.ui.preview.DevicePreviews
 import template.core.ui.preview.FontScalePreviews
 import template.core.ui.preview.OrientationPreviews
@@ -35,7 +35,6 @@ import template.feature.posts.component.PostList
 @Composable
 fun PostsRoute(
     viewModel: PostsViewModel = hiltViewModel(),
-    onError: (Error) -> Unit,
     onPostClick: (Int) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -43,7 +42,6 @@ fun PostsRoute(
     PostsScreen(
         uiState = uiState,
         onEvent = viewModel::onEvent,
-        onError = onError,
         onPostClick = onPostClick
     )
 }
@@ -54,17 +52,19 @@ fun PostsRoute(
 fun PostsScreen(
     uiState: PostsUiState,
     onEvent: (PostsUiEvent) -> Unit,
-    onError: (Error) -> Unit,
     onPostClick: (Int) -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
-    LaunchedEffect(uiState.error != null) {
-        uiState.error?.let { onError(it) }
-    }
+    AppErrorSnackbar(
+        error = uiState.error,
+        onErrorConsumed = { onEvent(PostsUiEvent.ErrorConsumed) }
+    )
 
     Column(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
     ) {
         TopAppBar(
             scrollBehavior = scrollBehavior,
@@ -98,7 +98,7 @@ fun PostsScreen(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        ProgressIndicator()
+        AppProgressIndicator()
     }
 }
 
@@ -115,7 +115,6 @@ private fun PostsScreenPreview(
     PostsScreen(
         uiState = PostsUiState(posts = posts),
         onEvent = {},
-        onError = {},
         onPostClick = {}
     )
 }

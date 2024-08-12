@@ -32,7 +32,8 @@ class PostsViewModel @Inject constructor(
 
     fun onEvent(event: PostsUiEvent) {
         when (event) {
-            PostsUiEvent.Logout -> onLogoutClick()
+            is PostsUiEvent.Logout -> onLogoutClick()
+            is PostsUiEvent.ErrorConsumed -> onErrorConsumed()
         }
     }
 
@@ -62,10 +63,15 @@ class PostsViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = false) }
         }
     }
+
+    private fun onErrorConsumed() {
+        _uiState.update { it.copy(error = null) }
+    }
 }
 
 sealed interface PostsUiEvent {
     data object Logout : PostsUiEvent
+    data object ErrorConsumed : PostsUiEvent
 }
 
 data class PostsUiState(
