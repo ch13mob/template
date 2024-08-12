@@ -37,5 +37,9 @@ enum class Feature(
     DOCUMENT_SCANNER(
         title = "Document scanner",
         screen = Screen.DocumentScanner
+    ),
+    CAROUSEL(
+        title = "Carousel",
+        screen = Screen.Carousel
     )
 }

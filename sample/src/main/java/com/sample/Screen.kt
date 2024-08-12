@@ -30,4 +30,7 @@ sealed class Screen {
 
     @Serializable
     data object DocumentScanner : Screen()
+
+    @Serializable
+    data object Carousel : Screen()
 }

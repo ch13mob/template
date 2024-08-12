@@ -33,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.sample.features.FeaturesScreen
 import com.sample.features.animatedcounter.AnimatedCounterScreen
 import com.sample.features.annotatedstring.AnnotatedStringScreen
+import com.sample.features.carousel.CarouselScreen
 import com.sample.features.marqueetext.MarqueeTextScreen
 import com.sample.features.photopicker.PhotoPickerScreen
 import com.sample.features.scanner.DocumentScannerScreen
@@ -125,6 +126,9 @@ class MainActivity : ComponentActivity() {
                                 }
                                 composable<Screen.DocumentScanner> {
                                     DocumentScannerScreen()
+                                }
+                                composable<Screen.Carousel> {
+                                    CarouselScreen()
                                 }
                             }
                         }
