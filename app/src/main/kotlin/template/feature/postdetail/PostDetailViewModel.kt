@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.navigation.toRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
-import template.Screen
-import template.Screen.PostDetail.Companion.POST_ID_ARG
+import template.navigation.Screen
+import template.navigation.Screen.PostDetail.Companion.POST_ID_ARG
 import javax.inject.Inject
 
 @HiltViewModel

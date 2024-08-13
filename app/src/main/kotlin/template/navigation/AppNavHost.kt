@@ -1,6 +1,5 @@
-package template
+package template.navigation
 
-import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -10,6 +9,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import kotlinx.serialization.Serializable
+import template.UserAuthState
 import template.feature.launch.LaunchRoute
 import template.feature.login.LoginRoute
 import template.feature.postdetail.PostDetailRoute
@@ -48,9 +48,7 @@ sealed class Screen {
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
-    userAuth: UserAuthState,
-    deeplink: Uri?,
-    onDeeplinkConsumed: () -> Unit,
+    userAuth: UserAuthState
 ) {
     val navController = rememberNavController()
 
@@ -70,14 +68,12 @@ fun AppNavHost(
         }
     }
 
-    LaunchedEffect(deeplink, userAuth) {
-        deeplink?.let { deeplink ->
-            if (userAuth is UserAuthState.LoggedIn) {
-                navController.navigate(deeplink)
-                onDeeplinkConsumed()
-            }
+    AppDeeplinkConsumer(
+        isLoggedIn = userAuth is UserAuthState.LoggedIn,
+        onDeeplinkConsume = { deeplink ->
+            navController.navigate(deeplink)
         }
-    }
+    )
 
     NavHost(
         modifier = modifier,

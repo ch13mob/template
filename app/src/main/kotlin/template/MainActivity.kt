@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,21 +26,13 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import template.core.designsystem.theme.TemplateTheme
 import template.core.ui.LocalSnackbarHostState
+import template.navigation.AppNavHost
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    override fun onStart() {
-        super.onStart()
-        intent?.data?.let {
-            viewModel.onEvent(MainUiEvent.Deeplink(it))
-        }
-        intent = null
-    }
-
-    @Suppress("LongMethod")
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -63,7 +54,6 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
-            val deeplink by viewModel.deeplink.collectAsStateWithLifecycle()
             val snackbarHostState = remember { SnackbarHostState() }
 
             TemplateTheme {
@@ -74,9 +64,7 @@ class MainActivity : ComponentActivity() {
                             content = { paddingValues ->
                                 AppNavHost(
                                     modifier = Modifier.padding(paddingValues),
-                                    userAuth = userAuth,
-                                    deeplink = deeplink,
-                                    onDeeplinkConsumed = { viewModel.onEvent(MainUiEvent.DeeplinkConsumed) }
+                                    userAuth = userAuth
                                 )
                             }
                         )
