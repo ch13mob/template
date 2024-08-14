@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,12 +14,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -27,13 +26,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import template.core.common.error.Error
-import template.core.ui.component.ProgressIndicator
+import template.core.ui.component.AppErrorSnackbar
+import template.core.ui.component.AppProgressIndicator
 
 @Composable
 fun LoginRoute(
-    viewModel: LoginViewModel = hiltViewModel(),
-    onError: (Error) -> Unit
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -41,20 +39,17 @@ fun LoginRoute(
         email = viewModel.email,
         password = viewModel.password,
         uiState = uiState,
-        onEvent = viewModel::onEvent,
-        onError = onError
+        onEvent = viewModel::onEvent
     )
 }
 
 @Suppress("LongMethod")
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     email: String,
     password: String,
     uiState: LoginUiState,
-    onEvent: (LoginUiEvent) -> Unit,
-    onError: (Error) -> Unit
+    onEvent: (LoginUiEvent) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val emailError by remember(uiState.isEmailValid) {
@@ -68,12 +63,15 @@ fun LoginScreen(
         )
     }
 
-    LaunchedEffect(uiState.error != null) {
-        uiState.error?.let { onError(it) }
-    }
+    AppErrorSnackbar(
+        error = uiState.error,
+        onErrorConsumed = { onEvent(LoginUiEvent.ErrorConsumed) }
+    )
 
     Column(
-        modifier = Modifier.padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -127,7 +125,7 @@ fun LoginScreen(
         enter = fadeIn(),
         exit = fadeOut()
     ) {
-        ProgressIndicator()
+        AppProgressIndicator()
     }
 }
 
@@ -138,7 +136,6 @@ private fun LoginScreenPreview() {
         email = "",
         password = "",
         uiState = LoginUiState(),
-        onEvent = {},
-        onError = {}
+        onEvent = {}
     )
 }

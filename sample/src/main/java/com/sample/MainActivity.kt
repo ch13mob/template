@@ -26,12 +26,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sample.features.FeaturesScreen
 import com.sample.features.animatedcounter.AnimatedCounterScreen
 import com.sample.features.annotatedstring.AnnotatedStringScreen
+import com.sample.features.carousel.CarouselScreen
 import com.sample.features.marqueetext.MarqueeTextScreen
 import com.sample.features.photopicker.PhotoPickerScreen
 import com.sample.features.scanner.DocumentScannerScreen
@@ -56,7 +58,7 @@ class MainActivity : ComponentActivity() {
             var showBackButton by remember { mutableStateOf(false) }
             val navController = rememberNavController().apply {
                 addOnDestinationChangedListener { _, destination, _ ->
-                    showBackButton = destination.route != Screen.Features.route
+                    showBackButton = !destination.hasRoute(Screen.Features::class)
                 }
             }
 
@@ -90,9 +92,9 @@ class MainActivity : ComponentActivity() {
                             NavHost(
                                 modifier = Modifier.padding(paddingValues),
                                 navController = navController,
-                                startDestination = Screen.Features.route
+                                startDestination = Screen.Features
                             ) {
-                                composable(Screen.Features.route) {
+                                composable<Screen.Features> {
                                     FeaturesScreen(
                                         features = uiState.features,
                                         onFeatureClick = { route ->
@@ -101,29 +103,32 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
 
-                                composable(Screen.AnimatedCounter.route) {
+                                composable<Screen.AnimatedCounter> {
                                     AnimatedCounterScreen()
                                 }
-                                composable(Screen.AnnotatedString.route) {
+                                composable<Screen.AnnotatedString> {
                                     AnnotatedStringScreen()
                                 }
-                                composable(Screen.PhotoPicker.route) {
+                                composable<Screen.PhotoPicker> {
                                     PhotoPickerScreen()
                                 }
-                                composable(Screen.TextSelection.route) {
+                                composable<Screen.TextSelection> {
                                     TextSelectionScreen()
                                 }
-                                composable(Screen.MarqueeText.route) {
+                                composable<Screen.MarqueeText> {
                                     MarqueeTextScreen()
                                 }
-                                composable(Screen.WebView.route) {
+                                composable<Screen.WebView> {
                                     WebViewScreen()
                                 }
-                                composable(Screen.TabRowHorizontalPager.route) {
+                                composable<Screen.TabRowHorizontalPager> {
                                     TabRowHorizontalPagerScreen()
                                 }
-                                composable(Screen.DocumentScanner.route) {
+                                composable<Screen.DocumentScanner> {
                                     DocumentScannerScreen()
+                                }
+                                composable<Screen.Carousel> {
+                                    CarouselScreen()
                                 }
                             }
                         }

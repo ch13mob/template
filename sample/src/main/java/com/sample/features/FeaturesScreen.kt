@@ -12,11 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.sample.Screen
 
 @Composable
 fun FeaturesScreen(
     features: List<Feature>,
-    onFeatureClick: (String) -> Unit
+    onFeatureClick: (Screen) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -25,7 +26,7 @@ fun FeaturesScreen(
         itemsIndexed(features) { index, item ->
             ListItem(
                 modifier = Modifier.clickable {
-                    onFeatureClick(item.screen.route)
+                    onFeatureClick(item.screen)
                 },
                 headlineContent = {
                     Text(
